@@ -1,0 +1,1491 @@
+/* ============================================================
+   SUDURPASCHIM GHAR JAGGA KAAROBAAR
+   Animations — css/animations.css
+   Dhangadhi, Kailali, Nepal
+   ============================================================
+
+   PHILOSOPHY
+   ───────────────────────────────────────────────────────────
+   Apple-grade motion: purposeful, subtle, and respectful
+   of the user's attention. Every animation either:
+     (a) communicates state or hierarchy, or
+     (b) reinforces spatial relationships in the layout.
+
+   PERFORMANCE RULES (strictly followed)
+   ───────────────────────────────────────────────────────────
+   ✓  Only `transform` and `opacity` are animated
+      — these are GPU-composited, zero layout cost
+   ✓  No animations on color, size, margin, or padding
+   ✓  `animation-fill-mode: both` on all entrance animations
+      so elements start invisible during their delay
+   ✓  All durations ≤ 900ms (no slow animations)
+   ✓  `prefers-reduced-motion` override at the end
+      collapses everything to instant
+
+   COORDINATION WITH OTHER FILES
+   ───────────────────────────────────────────────────────────
+   style.css already defines:
+     — `@keyframes skeleton-shimmer`   (loading skeleton)
+     — `.btn:active { scale(0.975) }`  (press state)
+     — `.property-card:hover` lift + image zoom
+     — `.section__link:hover svg` arrow translate
+     — Nav menu open/close transitions
+     — All hover color / shadow transitions
+
+   This file adds ONLY what those files do not cover.
+
+   ============================================================
+
+   TABLE OF CONTENTS
+   ───────────────────────────────────────────────────────────
+    1.  Animation Custom Properties
+    2.  Core @keyframes Library
+    3.  Navigation Animations
+    4.  Hero Section — Staggered Entrance Sequence
+    5.  Property Card Entrance
+    6.  Button Micro-interactions
+    7.  Image Reveal Animations
+    8.  Scroll Reveal System
+    9.  Stagger Utility Classes
+   10.  State Transition Helpers
+   11.  Stats Bar Entrance
+   12.  Section Reveal Helpers
+   13.  Trust Card Entrance
+   14.  CTA Strip Entrance
+   15.  Footer Entrance
+   16.  Supplementary Hover Animations
+   17.  Reduced Motion Overrides
+   ============================================================ */
+
+
+/* ============================================================
+   1. ANIMATION CUSTOM PROPERTIES
+   ============================================================ */
+
+:root {
+
+  /* ── Durations ── */
+  --anim-instant:   80ms;
+  --anim-fast:      180ms;
+  --anim-base:      320ms;
+  --anim-slow:      500ms;
+  --anim-slower:    700ms;
+  --anim-slowest:   900ms;
+
+  /* ── Easing curves ── */
+
+  /* Decelerate — items settling into place (most entrances) */
+  --ease-out:       cubic-bezier(0, 0, 0.2, 1);
+
+  /* Accelerate — items leaving the screen */
+  --ease-in:        cubic-bezier(0.4, 0, 1, 1);
+
+  /* Symmetric — general UI transitions */
+  --ease-in-out:    cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Gentle overshoot — used sparingly, only for pops & badges */
+  --ease-spring:    cubic-bezier(0.34, 1.38, 0.64, 1);
+
+  /* ── Entrance translate distance ── */
+  /* Small, purposeful movement — never more than 32px */
+  --enter-y:        22px;
+  --enter-y-sm:     12px;
+  --enter-x:        20px;
+  --enter-scale:    0.94;
+
+  /* ── Hero stagger delays ── */
+  --hero-d0:   80ms;
+  --hero-d1:  200ms;
+  --hero-d2:  340ms;   /* Devanagari — the cultural signature */
+  --hero-d3:  470ms;
+  --hero-d4:  570ms;
+  --hero-d5:  650ms;
+  --hero-d6:  260ms;   /* Hero frame — appears while text loads in */
+  --hero-d7:  700ms;   /* Badge — after frame has settled */
+  --hero-d8:  840ms;   /* Float card — last to arrive */
+}
+
+
+/* ============================================================
+   2. CORE @keyframes LIBRARY
+   ============================================================ */
+
+/* ── Fade ── */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Fade + directional translate ── */
+
+@keyframes fadeUp {
+  from {
+    opacity:   0;
+    transform: translateY(var(--enter-y));
+  }
+  to {
+    opacity:   1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeUpSm {
+  from {
+    opacity:   0;
+    transform: translateY(var(--enter-y-sm));
+  }
+  to {
+    opacity:   1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeDown {
+  from {
+    opacity:   0;
+    transform: translateY(calc(-1 * var(--enter-y-sm)));
+  }
+  to {
+    opacity:   1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeLeft {
+  from {
+    opacity:   0;
+    transform: translateX(var(--enter-x));
+  }
+  to {
+    opacity:   1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeRight {
+  from {
+    opacity:   0;
+    transform: translateX(calc(-1 * var(--enter-x)));
+  }
+  to {
+    opacity:   1;
+    transform: translateX(0);
+  }
+}
+
+/* ── Scale in ── */
+
+@keyframes scaleIn {
+  from {
+    opacity:   0;
+    transform: scale(var(--enter-scale));
+  }
+  to {
+    opacity:   1;
+    transform: scale(1);
+  }
+}
+
+/* ── Scale in with gentle overshoot — for badges/pops ── */
+
+@keyframes scalePop {
+  0%   { opacity: 0; transform: scale(0.78); }
+  65%  { opacity: 1; transform: scale(1.06); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ── Reveal from bottom — hero visual frame ── */
+
+@keyframes frameReveal {
+  from {
+    opacity:   0;
+    transform: scale(0.96) translateY(16px);
+  }
+  to {
+    opacity:   1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ── Float card entrance — slides up from below frame ── */
+
+@keyframes floatCardIn {
+  from {
+    opacity:   0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity:   1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Property card entrance — JS-injected cards ── */
+
+@keyframes cardReveal {
+  from {
+    opacity:   0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity:   1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Page header entrance — slides down from above ── */
+
+@keyframes navReveal {
+  from {
+    opacity:   0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity:   1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Live dot pulse — badge "available now" indicator ── */
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1;    transform: scale(1);    }
+  50%       { opacity: 0.45; transform: scale(0.72); }
+}
+
+/* ── Gold shimmer sweep — btn--gold hover effect ── */
+/* Applied via ::after pseudo-element on .btn--gold     */
+
+@keyframes shimmerSweep {
+  from { transform: skewX(-20deg) translateX(-140%); }
+  to   { transform: skewX(-20deg) translateX(300%);  }
+}
+
+/* ── Image load fade ── */
+
+@keyframes imageFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Trust card icon entrance (used via .reveal system) ── */
+
+@keyframes iconReveal {
+  from {
+    opacity:   0;
+    transform: scale(0.6) rotate(-8deg);
+  }
+  to {
+    opacity:   1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+
+/* ============================================================
+   3. NAVIGATION ANIMATIONS
+   ============================================================ */
+
+/* ── Header entrance on page load ── */
+
+.site-header {
+  animation:
+    navReveal
+    var(--anim-slow)
+    var(--ease-out)
+    both;
+}
+
+/* ── Desktop nav link — animated underline sweep ──
+   Grows from right → left on hover; stays on active.
+   Only applies to the horizontal desktop nav (768px+).     */
+
+@media (min-width: 768px) {
+
+  .nav-link {
+    position: relative;
+  }
+
+  /* Hairline underline — starts collapsed from right */
+  .nav-link::after {
+    content:          '';
+    position:         absolute;
+    bottom:           4px;
+    left:             var(--space-3);
+    right:            var(--space-3);
+    height:           1.5px;
+    border-radius:    1px;
+    background-color: var(--clr-navy);
+    transform:        scaleX(0);
+    transform-origin: right center;
+    transition:
+      transform var(--anim-base) var(--ease-out);
+  }
+
+  /* Hover: expand from right to left */
+  .nav-link:hover::after {
+    transform:        scaleX(1);
+    transform-origin: left center;
+  }
+
+  /* Active: always underlined, no transition needed */
+  .nav-link--active::after {
+    transform:        scaleX(1);
+    transform-origin: left center;
+  }
+}
+
+/* ── Mobile nav link — subtle indent on hover ──
+   Uses transform (GPU-composited) instead of padding-left
+   to avoid layout reflow on every animation frame.           */
+
+@media (max-width: 767px) {
+
+  .nav-link {
+    transition:
+      color             var(--anim-fast) var(--ease-out),
+      transform         var(--anim-base) var(--ease-out),
+      border-left-color var(--anim-base) var(--ease-out);
+    border-left: 2px solid transparent;
+    padding-left: var(--space-3);
+    display: block;
+  }
+
+  .nav-link:hover {
+    transform:         translateX(6px);
+    border-left-color: var(--clr-accent);
+  }
+
+  .nav-link--active {
+    transform:         translateX(6px);
+    border-left-color: var(--clr-navy);
+  }
+}
+
+
+/* ============================================================
+   4. HERO SECTION — STAGGERED ENTRANCE SEQUENCE
+   ============================================================
+
+   All hero elements start invisible (opacity: 0) and cascade
+   in from slightly below. The visual frame appears early so
+   the page feels alive while the text is still loading in.
+
+   Order:  eyebrow → headline → devanagari → description
+           → actions → stats  |  frame → badge → float card
+   ============================================================ */
+
+/* ── Left column: text content ── */
+
+.hero__eyebrow {
+  animation:
+    fadeUp
+    var(--anim-slower)
+    var(--ease-out)
+    var(--hero-d0)
+    both;
+}
+
+.hero__headline {
+  animation:
+    fadeUp
+    var(--anim-slower)
+    var(--ease-out)
+    var(--hero-d1)
+    both;
+}
+
+/* Devanagari signature — the cultural heart of the brand.
+   Gets a slightly longer duration to feel more considered. */
+.hero__devanagari {
+  animation:
+    fadeUp
+    var(--anim-slowest)
+    var(--ease-out)
+    var(--hero-d2)
+    both;
+}
+
+.hero__description {
+  animation:
+    fadeUp
+    var(--anim-slower)
+    var(--ease-out)
+    var(--hero-d3)
+    both;
+}
+
+.hero__actions {
+  animation:
+    fadeUp
+    var(--anim-slower)
+    var(--ease-out)
+    var(--hero-d4)
+    both;
+}
+
+.hero__stats {
+  animation:
+    fadeUp
+    var(--anim-slow)
+    var(--ease-out)
+    var(--hero-d5)
+    both;
+}
+
+/* ── Right column: visual ── */
+
+/* Frame appears mid-sequence — gives page visual weight early */
+.hero__frame {
+  animation:
+    frameReveal
+    var(--anim-slowest)
+    var(--ease-out)
+    var(--hero-d6)
+    both;
+}
+
+/* "Available Now" badge pops in after the frame settles */
+.hero__badge {
+  animation:
+    scalePop
+    var(--anim-slow)
+    var(--ease-spring)
+    var(--hero-d7)
+    both;
+}
+
+/* Float card slides up from below — last to arrive */
+.hero__float-card {
+  animation:
+    floatCardIn
+    var(--anim-slower)
+    var(--ease-out)
+    var(--hero-d8)
+    both;
+}
+
+/* ── Badge dot — persistent live pulse ──
+   Runs infinitely to reinforce "live / active" status.   */
+
+.hero__badge-dot {
+  animation:
+    dotPulse
+    2.4s
+    ease-in-out
+    infinite;
+}
+
+
+/* ============================================================
+   5. PROPERTY CARD ENTRANCE
+   ============================================================
+
+   Cards are injected into .properties-grid by script.js.
+   Newly added DOM elements trigger CSS animations automatically
+   without any JavaScript involvement here.
+
+   Using nth-child stagger so each card enters slightly after
+   the one before it, creating a cascade read naturally
+   left → right, row by row.
+   ============================================================ */
+
+.property-card {
+  animation:
+    cardReveal
+    var(--anim-slower)
+    var(--ease-out)
+    both;
+}
+
+/* ── Stagger by position in grid ── */
+
+.property-card:nth-child(1)  { animation-delay: 0.04s; }
+.property-card:nth-child(2)  { animation-delay: 0.11s; }
+.property-card:nth-child(3)  { animation-delay: 0.18s; }
+.property-card:nth-child(4)  { animation-delay: 0.25s; }
+.property-card:nth-child(5)  { animation-delay: 0.32s; }
+.property-card:nth-child(6)  { animation-delay: 0.39s; }
+
+/* Cards beyond 6 animate together without additional stagger */
+.property-card:nth-child(n+7) { animation-delay: 0.44s; }
+
+/* ── Card inner content: subtle delayed reveal ── */
+
+/* The type label inside each card fades in fractionally
+   after the card itself to create visual depth layers.     */
+.property-card__type {
+  animation:
+    fadeIn
+    var(--anim-base)
+    var(--ease-out)
+    0.3s
+    both;
+}
+
+/* ── Featured badge entrance ── */
+
+.property-card__featured-badge {
+  animation:
+    scalePop
+    var(--anim-slow)
+    var(--ease-spring)
+    0.35s
+    both;
+}
+
+/* ── Status badge entrance ── */
+
+.property-card__status {
+  animation:
+    fadeLeft
+    var(--anim-base)
+    var(--ease-out)
+    0.28s
+    both;
+}
+
+
+/* ============================================================
+   6. BUTTON MICRO-INTERACTIONS
+   ============================================================
+
+   style.css already handles:
+   — All hover color/shadow changes
+   — :active scale(0.975) press state
+
+   This section adds only what's missing:
+   — Gold button shimmer sweep (::after pseudo-element)
+   — Focus ring enhancement
+   — Primary button text shimmer on hover
+   ============================================================ */
+
+/* ── Gold button — light shimmer sweep on hover ──
+   A slanted highlight moves left-to-right, referencing
+   the physical shine of polished metal.                    */
+
+.btn--gold {
+  /* position: relative required for ::after shimmer positioning */
+  position: relative;
+  overflow: hidden;
+}
+
+.btn--gold::after {
+  content:    '';
+  position:   absolute;
+  inset:      0;
+  background: linear-gradient(
+    105deg,
+    transparent         10%,
+    rgba(255,255,255,0.32) 40%,
+    rgba(255,255,255,0.10) 50%,
+    transparent         60%
+  );
+  transform:       skewX(-20deg) translateX(-140%);
+  pointer-events:  none;
+}
+
+.btn--gold:hover::after {
+  animation:
+    shimmerSweep
+    0.55s
+    var(--ease-in-out)
+    forwards;
+}
+
+/* ── Primary button — add ::after shimmer too ── */
+
+.btn--primary {
+  /* position: relative required for ::after shimmer positioning */
+  position: relative;
+  overflow: hidden;
+}
+
+.btn--primary::after {
+  content:    '';
+  position:   absolute;
+  inset:      0;
+  background: linear-gradient(
+    105deg,
+    transparent          10%,
+    rgba(255,255,255,0.10) 40%,
+    rgba(255,255,255,0.06) 50%,
+    transparent          60%
+  );
+  transform:      skewX(-20deg) translateX(-140%);
+  pointer-events: none;
+}
+
+.btn--primary:hover::after {
+  animation:
+    shimmerSweep
+    0.55s
+    var(--ease-in-out)
+    forwards;
+}
+
+/* ── Focus ring — animated appear ── */
+
+.btn:focus-visible {
+  animation: focusRingPulse 0.4s var(--ease-out) forwards;
+}
+
+@keyframes focusRingPulse {
+  from { outline-offset: 0px;  outline-color: transparent; }
+  to   { outline-offset: 4px;  outline-color: var(--clr-accent); }
+}
+
+/* ── Nav phone CTA — matching shimmer ── */
+
+.nav-phone {
+  /* Both position and overflow required for shimmer to work */
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-phone::after {
+  content:    '';
+  position:   absolute;
+  inset:      0;
+  background: linear-gradient(
+    105deg,
+    transparent          20%,
+    rgba(255,255,255,0.10) 50%,
+    transparent          80%
+  );
+  transform:      skewX(-20deg) translateX(-140%);
+  pointer-events: none;
+}
+
+.nav-phone:hover::after {
+  animation:
+    shimmerSweep
+    0.5s
+    var(--ease-in-out)
+    forwards;
+}
+
+
+/* ============================================================
+   7. IMAGE REVEAL ANIMATIONS
+   ============================================================
+
+   Images load asynchronously. When the browser paints them,
+   they fade in rather than appearing with a hard flash.
+
+   Applies to:
+   — Hero frame image (set by JS via src attribute)
+   — Property card images (JS-injected img elements)
+   ============================================================ */
+
+/* ── Hero frame: injected by script.js ── */
+
+.hero__frame-image img {
+  animation:
+    imageFadeIn
+    var(--anim-slow)
+    var(--ease-out)
+    both;
+}
+
+/* ── Property card images ── */
+
+.property-card__image-wrap img {
+  animation:
+    imageFadeIn
+    var(--anim-slow)
+    var(--ease-out)
+    both;
+}
+
+/* ── Trust card icons — reveal on scroll via .reveal class ──
+   Defined here as a supplementary option for the icon bubble.
+   The .reveal system (below) handles the trigger.            */
+
+.trust-card__icon {
+  transition:
+    transform  var(--anim-base) var(--ease-out),
+    background-color var(--anim-base) var(--ease-out);
+}
+
+.trust-card:hover .trust-card__icon {
+  transform: scale(1.1);
+}
+
+/* ── Logo images ── */
+
+.nav-logo__img,
+.footer-brand__img {
+  animation:
+    fadeIn
+    var(--anim-slow)
+    var(--ease-out)
+    both;
+}
+
+
+/* ============================================================
+   8. SCROLL REVEAL SYSTEM
+   ============================================================
+
+   Usage in script.js:
+     1. Add class `reveal` to any element you want to animate
+        in when it enters the viewport.
+     2. When the Intersection Observer fires, add `is-visible`
+        to trigger the transition.
+     3. Use modifier classes for directional variants and delays.
+
+   Base state: element is invisible and offset
+   Visible state: element is fully visible at natural position
+   ============================================================ */
+
+/* ── Base: hidden + offset (start state) ── */
+
+.reveal {
+  opacity:    0;
+  transform:  translateY(var(--enter-y));
+  transition:
+    opacity    0.65s var(--ease-out),
+    transform  0.65s var(--ease-out);
+  will-change: opacity, transform;
+}
+
+/* ── Visible: triggered by JS adding .is-visible ── */
+
+.reveal.is-visible {
+  opacity:   1;
+  transform: translateY(0);
+  will-change: auto; /* Release GPU layer after animation */
+}
+
+/* ── Directional variants ── */
+
+/* Pure fade — no movement */
+.reveal--fade {
+  transform: none;
+}
+
+.reveal--fade.is-visible {
+  transform: none;
+}
+
+/* Slide from left (comes in from off-screen right) */
+.reveal--from-right {
+  transform: translateX(var(--enter-x));
+}
+
+.reveal--from-right.is-visible {
+  transform: translateX(0);
+}
+
+/* Slide from right (comes in from off-screen left) */
+.reveal--from-left {
+  transform: translateX(calc(-1 * var(--enter-x)));
+}
+
+.reveal--from-left.is-visible {
+  transform: translateX(0);
+}
+
+/* Scale in */
+.reveal--scale {
+  transform: scale(0.95) translateY(12px);
+}
+
+.reveal--scale.is-visible {
+  transform: scale(1) translateY(0);
+}
+
+/* Fade down (element enters from above) */
+.reveal--down {
+  transform: translateY(calc(-1 * var(--enter-y-sm)));
+}
+
+.reveal--down.is-visible {
+  transform: translateY(0);
+}
+
+/* ── Timing variants ── */
+
+/* Slower reveal — for hero-adjacent sections */
+.reveal--slow {
+  transition-duration: 0.9s;
+}
+
+/* Fast reveal — for small UI elements */
+.reveal--fast {
+  transition-duration: 0.4s;
+}
+
+/* ── Delay modifiers ──
+   Combine with other reveal classes for staggered entrances.
+   e.g.: <article class="reveal reveal--delay-2">           */
+
+.reveal--delay-1 { transition-delay: 0.08s; }
+.reveal--delay-2 { transition-delay: 0.16s; }
+.reveal--delay-3 { transition-delay: 0.24s; }
+.reveal--delay-4 { transition-delay: 0.34s; }
+.reveal--delay-5 { transition-delay: 0.44s; }
+.reveal--delay-6 { transition-delay: 0.56s; }
+
+
+/* ============================================================
+   9. STAGGER UTILITY CLASSES
+   ============================================================
+
+   Apply to siblings within a grid or list to create
+   a cascade effect without JavaScript calculations.
+
+   Usage:
+     <div class="properties-grid">
+       <article class="property-card stagger-1">…</article>
+       <article class="property-card stagger-2">…</article>
+       <article class="property-card stagger-3">…</article>
+     </div>
+
+   These are additive — pair with .reveal or use standalone
+   on elements that have their own animation.
+   ============================================================ */
+
+.stagger-1  { animation-delay:  0.06s; }
+.stagger-2  { animation-delay:  0.13s; }
+.stagger-3  { animation-delay:  0.20s; }
+.stagger-4  { animation-delay:  0.28s; }
+.stagger-5  { animation-delay:  0.37s; }
+.stagger-6  { animation-delay:  0.47s; }
+.stagger-7  { animation-delay:  0.58s; }
+.stagger-8  { animation-delay:  0.70s; }
+
+/* Transition-delay stagger (for .reveal system) */
+.stagger-delay-1  { transition-delay: 0.06s; }
+.stagger-delay-2  { transition-delay: 0.13s; }
+.stagger-delay-3  { transition-delay: 0.20s; }
+.stagger-delay-4  { transition-delay: 0.28s; }
+.stagger-delay-5  { transition-delay: 0.37s; }
+.stagger-delay-6  { transition-delay: 0.47s; }
+
+
+/* ============================================================
+  10. STATE TRANSITION HELPERS
+   ============================================================
+
+   Classes that script.js applies to communicate data state
+   changes (loading, updating, success, error).
+   ============================================================ */
+
+/* ── Loading state — applied to data containers ──
+   Reduces opacity while API data is in flight.           */
+
+.is-loading {
+  opacity:        0.5;
+  pointer-events: none;
+  transition:     opacity var(--anim-base) var(--ease-out);
+}
+
+/* Specific: hero stats loading */
+#heroStats.is-loading .hero__stat-number {
+  opacity:    0.35;
+  transition: opacity var(--anim-base) var(--ease-out);
+}
+
+/* ── Data update — flip old value out, new value in ── */
+
+@keyframes valueUpdate {
+  0%   { opacity: 1; transform: translateY(0);    }
+  30%  { opacity: 0; transform: translateY(-6px); }
+  60%  { opacity: 0; transform: translateY( 6px); }
+  100% { opacity: 1; transform: translateY(0);    }
+}
+
+.is-updating {
+  animation: valueUpdate 0.4s var(--ease-in-out) both;
+}
+
+/* ── Counter — stat numbers tick up on load ──
+   JS can trigger this on #statTotal, #statAvailable, #statFeatured */
+
+@keyframes counterReveal {
+  from {
+    opacity:   0;
+    transform: translateY(10px) scale(0.85);
+  }
+  to {
+    opacity:   1;
+    transform: translateY(0)    scale(1);
+  }
+}
+
+.stat-counting {
+  animation:
+    counterReveal
+    var(--anim-slow)
+    var(--ease-spring)
+    both;
+}
+
+/* ── Success state — subtle confirmation flash ── */
+
+@keyframes successFlash {
+  0%   { opacity: 1; }
+  35%  { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+.is-success {
+  animation: successFlash 0.5s var(--ease-out);
+}
+
+/* ── Hero float card — data loading placeholder ── */
+
+.hero__float-card.is-loading .hero__float-title,
+.hero__float-card.is-loading .hero__float-price {
+  opacity:    0.28;
+  transition: opacity var(--anim-base) var(--ease-out);
+}
+
+/* ── Page transition — subtle fade on internal navigation ── */
+
+@keyframes pageExit {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.page-is-exiting {
+  animation:
+    pageExit
+    var(--anim-fast)
+    var(--ease-in)
+    forwards;
+  pointer-events: none;
+}
+
+/* ── Properties grid — smooth skeleton → content swap ──
+   When JS removes skeleton cards and injects real ones,
+   this transition prevents a hard visual cut.             */
+
+.properties-grid {
+  transition: opacity var(--anim-base) var(--ease-out);
+}
+
+.properties-grid.is-loading {
+  opacity: 0.4;
+}
+
+
+/* ============================================================
+  11. STATS BAR ENTRANCE
+   ============================================================
+
+   The stats bar sits directly below the hero. Its four metric
+   cells enter with a short stagger after the hero sequence
+   completes, anchoring the page's data layer visually.
+   ============================================================ */
+
+.stats-bar__item {
+  animation:
+    fadeUp
+    var(--anim-slow)
+    var(--ease-out)
+    both;
+}
+
+/* Stagger each metric cell */
+.stats-bar__item:nth-child(1) { animation-delay: 1.00s; }
+.stats-bar__item:nth-child(2) { animation-delay: 1.10s; }
+.stats-bar__item:nth-child(3) { animation-delay: 1.20s; }
+.stats-bar__item:nth-child(4) { animation-delay: 1.30s; }
+
+/* Stats icon bubbles: scale in slightly after the text */
+.stats-bar__icon {
+  animation:
+    scaleIn
+    var(--anim-base)
+    var(--ease-spring)
+    both;
+}
+
+.stats-bar__item:nth-child(1) .stats-bar__icon { animation-delay: 1.06s; }
+.stats-bar__item:nth-child(2) .stats-bar__icon { animation-delay: 1.16s; }
+.stats-bar__item:nth-child(3) .stats-bar__icon { animation-delay: 1.26s; }
+.stats-bar__item:nth-child(4) .stats-bar__icon { animation-delay: 1.36s; }
+
+
+/* ============================================================
+  12. SECTION REVEAL HELPERS
+   ============================================================
+
+   These supplement the .reveal utility system with
+   component-specific entrance behaviour. The .reveal class
+   handles opacity + transform; these add timing and variant
+   overrides per component for the script.js observer to use.
+   ============================================================ */
+
+/* ── Section header block ──
+   Eyebrow → title → subtitle → link cascade             */
+
+.section__eyebrow.reveal  { transition-duration: 0.45s; }
+.section__title.reveal    { transition-duration: 0.60s; transition-delay: 0.06s; }
+.section__subtitle.reveal { transition-duration: 0.60s; transition-delay: 0.12s; }
+.section__link.reveal     { transition-duration: 0.45s; transition-delay: 0.20s; }
+
+/* ── Eyebrow special: slides in from left ── */
+.section__eyebrow.reveal {
+  transform:       translateX(-16px);
+  transition-property: opacity, transform;
+}
+
+.section__eyebrow.reveal.is-visible {
+  transform: translateX(0);
+}
+
+/* ── Section footer CTA ── */
+.section__footer.reveal {
+  transition-delay: 0.28s;
+  transition-duration: 0.5s;
+}
+
+
+/* ============================================================
+  13. TRUST CARD ENTRANCE
+   ============================================================
+
+   Cards live in the dark navy section. They reveal with a
+   gentle scale-up, staggered across the 4-column grid.
+   The icon bubble arrives with a slight overshoot to feel
+   distinct from the text content.
+   ============================================================ */
+
+/* Base card reveal — triggered by .reveal.is-visible from JS */
+.trust-card.reveal {
+  transform:  scale(0.96) translateY(18px);
+  transition:
+    opacity   0.55s var(--ease-out),
+    transform 0.55s var(--ease-out);
+}
+
+.trust-card.reveal.is-visible {
+  transform: scale(1) translateY(0);
+}
+
+/* Stagger across the 4-column grid */
+.trust-card.reveal:nth-child(1) { transition-delay: 0.04s; }
+.trust-card.reveal:nth-child(2) { transition-delay: 0.12s; }
+.trust-card.reveal:nth-child(3) { transition-delay: 0.20s; }
+.trust-card.reveal:nth-child(4) { transition-delay: 0.28s; }
+
+/* Icon pops in with spring after card body settles */
+.trust-card.reveal .trust-card__icon {
+  opacity:    0;
+  transform:  scale(0.5);
+  transition:
+    opacity    0.4s  var(--ease-out)   0.3s,
+    transform  0.45s var(--ease-spring) 0.3s;
+}
+
+.trust-card.reveal.is-visible .trust-card__icon {
+  opacity:   1;
+  transform: scale(1);
+}
+
+/* Stagger icon delays in sync with card stagger */
+.trust-card.reveal:nth-child(1) .trust-card__icon { transition-delay: 0.34s; }
+.trust-card.reveal:nth-child(2) .trust-card__icon { transition-delay: 0.42s; }
+.trust-card.reveal:nth-child(3) .trust-card__icon { transition-delay: 0.50s; }
+.trust-card.reveal:nth-child(4) .trust-card__icon { transition-delay: 0.58s; }
+
+
+/* ============================================================
+  14. CTA STRIP ENTRANCE
+   ============================================================
+
+   The CTA section appears on scroll. Content side enters from
+   left, actions side from right — creating a split-open feel
+   that emphasises the two calls to action.
+   ============================================================ */
+
+/* Content side — slides from left */
+.cta-strip__content.reveal {
+  transform:  translateX(-24px);
+  transition:
+    opacity   0.65s var(--ease-out),
+    transform 0.65s var(--ease-out);
+}
+
+.cta-strip__content.reveal.is-visible {
+  transform: translateX(0);
+}
+
+/* Actions side — slides from right */
+.cta-strip__actions.reveal {
+  transform:  translateX(24px);
+  transition:
+    opacity   0.65s var(--ease-out) 0.12s,
+    transform 0.65s var(--ease-out) 0.12s;
+}
+
+.cta-strip__actions.reveal.is-visible {
+  transform: translateX(0);
+}
+
+/* Phone link — fades up within actions after the block settles */
+.cta-strip__phone.reveal {
+  transition-delay: 0.30s;
+  transition-duration: 0.4s;
+}
+
+/* Social links — last to arrive */
+.cta-strip__socials.reveal {
+  transition-delay: 0.42s;
+  transition-duration: 0.35s;
+}
+
+/* ── CTA title: word feels heavy, give it a slight scale ── */
+.cta-strip__title {
+  display: inline-block; /* allows transform without affecting flow */
+}
+
+
+/* ============================================================
+  15. FOOTER ENTRANCE
+   ============================================================
+
+   The footer reveals once the user has scrolled near the
+   bottom of the page. Brand column and nav groups enter with
+   a modest upward fade, each column slightly delayed.
+   ============================================================ */
+
+/* Brand column */
+.footer-brand.reveal {
+  transition:
+    opacity   0.60s var(--ease-out),
+    transform 0.60s var(--ease-out);
+}
+
+/* Nav groups stagger across the footer */
+.footer-nav__group.reveal { transition-duration: 0.50s; }
+
+.footer-nav__group.reveal:nth-child(1) { transition-delay: 0.08s; }
+.footer-nav__group.reveal:nth-child(2) { transition-delay: 0.16s; }
+.footer-nav__group.reveal:nth-child(3) { transition-delay: 0.24s; }
+
+/* Footer bottom bar — fades in last */
+.site-footer__bottom.reveal {
+  transition-duration: 0.45s;
+  transition-delay:    0.35s;
+}
+
+/* ── Footer social link hover ──
+   Scale + lift on hover for visual feedback.             */
+
+.footer-social-link {
+  transition:
+    background-color var(--anim-fast) var(--ease-out),
+    color            var(--anim-fast) var(--ease-out),
+    border-color     var(--anim-fast) var(--ease-out),
+    transform        var(--anim-base) var(--ease-spring);
+}
+
+.footer-social-link:hover {
+  transform: scale(1.12) translateY(-2px);
+}
+
+/* ── Footer nav link — animated underline ── */
+
+.footer-nav__link {
+  position: relative;
+  display:  inline-flex;
+}
+
+.footer-nav__link::after {
+  content:          '';
+  position:         absolute;
+  bottom:           -2px;
+  left:             0;
+  width:            100%;
+  height:           1px;
+  background-color: rgba(255, 255, 255, 0.4);
+  transform:        scaleX(0);
+  transform-origin: right center;
+  transition:       transform var(--anim-base) var(--ease-out);
+}
+
+.footer-nav__link:hover::after {
+  transform:        scaleX(1);
+  transform-origin: left center;
+}
+
+/* Phone link variant — gold underline */
+.footer-nav__link--phone::after {
+  background-color: var(--clr-accent);
+}
+
+/* ── Footer brand logo — subtle lift on hover ── */
+
+.footer-brand__logo {
+  transition: opacity  var(--anim-fast)  var(--ease-out),
+              transform var(--anim-base) var(--ease-out);
+}
+
+.footer-brand__logo:hover {
+  transform: translateY(-2px);
+}
+
+
+/* ============================================================
+  16. SUPPLEMENTARY HOVER ANIMATIONS
+   ============================================================
+
+   Additional hover refinements for components where style.css
+   only handles color transitions. These add spatial movement
+   to reinforce interactivity without duplicating any existing
+   rule.
+   ============================================================ */
+
+/* ── Property card CTA pill — micro-lift ──
+   style.css handles color change; this adds movement.    */
+
+.property-card__cta {
+  transition:
+    background-color var(--anim-fast)  var(--ease-out),
+    color            var(--anim-fast)  var(--ease-out),
+    box-shadow       var(--anim-base)  var(--ease-out),
+    transform        var(--anim-base)  var(--ease-spring);
+}
+
+.property-card__cta:hover {
+  transform: translateY(-1px) scale(1.03);
+}
+
+/* ── Nav logo — subtle lift on hover ── */
+
+.nav-logo {
+  transition: opacity   var(--anim-fast) var(--ease-out),
+              transform var(--anim-base) var(--ease-out);
+}
+
+.nav-logo:hover {
+  transform: translateY(-1px);
+}
+
+/* ── Hero stats — number reveal when JS updates them ── */
+
+.hero__stat-number {
+  transition:
+    opacity   var(--anim-base) var(--ease-out),
+    transform var(--anim-base) var(--ease-out);
+}
+
+/* ── Section link arrow — already translateX in style.css ──
+   Add a subtle scale to the arrow svg for extra polish.    */
+
+.section__link svg {
+  transition:
+    transform var(--anim-base) var(--ease-out);
+}
+
+.section__link:hover svg {
+  transform: translateX(5px) scale(1.1);
+}
+
+/* ── Trust card — border glow on hover ──
+   Complement the background-color hover from style.css.  */
+
+.trust-card {
+  transition:
+    background-color var(--anim-base) var(--ease-out),
+    border-color     var(--anim-base) var(--ease-out),
+    box-shadow       var(--anim-base) var(--ease-out),
+    transform        var(--anim-base) var(--ease-out);
+}
+
+.trust-card:hover {
+  transform: translateY(-3px);
+}
+
+/* ── CTA strip social links ── */
+
+.cta-strip__social-link {
+  transition:
+    color             var(--anim-fast) var(--ease-out),
+    text-decoration-color var(--anim-fast) var(--ease-out),
+    transform         var(--anim-base) var(--ease-out);
+}
+
+.cta-strip__social-link:hover {
+  transform: translateY(-1px);
+}
+
+/* ── Hero badge — gentle float on hover ── */
+
+.hero__badge {
+  transition:
+    box-shadow var(--anim-base) var(--ease-out),
+    transform  var(--anim-base) var(--ease-spring);
+}
+
+.hero__badge:is(a):hover {
+  transform: translateY(-2px);
+}
+
+/* ── Stats bar icon — bounce on hover ── */
+
+.stats-bar__item:hover .stats-bar__icon {
+  animation:
+    scalePop
+    var(--anim-slow)
+    var(--ease-spring)
+    both;
+}
+
+
+/* ============================================================
+  17. REDUCED MOTION OVERRIDES
+   ============================================================
+
+   Collapses all animations and transitions to instant when
+   the user has enabled "Reduce Motion" in their OS settings.
+
+   Hover transitions that communicate state (color changes)
+   are preserved at the fastest possible duration since they
+   carry information, not decoration.
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  /* ── Kill all CSS @keyframe animations ── */
+
+  .site-header,
+  .hero__eyebrow,
+  .hero__headline,
+  .hero__devanagari,
+  .hero__description,
+  .hero__actions,
+  .hero__stats,
+  .hero__frame,
+  .hero__badge,
+  .hero__float-card,
+  .hero__badge-dot,
+  .hero__frame-image img,
+  .property-card,
+  .property-card__type,
+  .property-card__featured-badge,
+  .property-card__status,
+  .property-card__image-wrap img,
+  .nav-logo__img,
+  .footer-brand__img,
+  .stats-bar__item,
+  .stats-bar__icon,
+  .is-updating,
+  .stat-counting,
+  .is-success,
+  .page-is-exiting {
+    animation:  none !important;
+    opacity:    1    !important;
+    transform:  none !important;
+  }
+
+  /* ── Kill shimmer pseudo-elements ── */
+
+  .btn--gold::after,
+  .btn--primary::after,
+  .nav-phone::after {
+    display: none !important;
+  }
+
+  /* ── Nav underline — remove transition (just show/hide) ── */
+
+  .nav-link::after {
+    transition: none !important;
+  }
+
+  /* ── Mobile nav link indent — instant ── */
+
+  .nav-link {
+    transition: color var(--anim-fast) var(--ease-out) !important;
+  }
+
+  /* ── Scroll reveal — make all elements immediately visible ──
+     Must include every .reveal variant and be applied before
+     JS has a chance to add .is-visible.                      */
+
+  .reveal,
+  .reveal--fade,
+  .reveal--from-right,
+  .reveal--from-left,
+  .reveal--scale,
+  .reveal--down,
+  .section__eyebrow.reveal,
+  .section__title.reveal,
+  .section__subtitle.reveal,
+  .section__link.reveal,
+  .section__footer.reveal,
+  .trust-card.reveal,
+  .trust-card.reveal .trust-card__icon,
+  .footer-brand.reveal,
+  .footer-nav__group.reveal,
+  .site-footer__bottom.reveal,
+  .cta-strip__content.reveal,
+  .cta-strip__actions.reveal,
+  .cta-strip__phone.reveal,
+  .cta-strip__socials.reveal {
+    opacity:    1    !important;
+    transform:  none !important;
+    transition: none !important;
+  }
+
+  /* ── Hover micro-animations — remove movement ── */
+
+  .trust-card:hover,
+  .footer-social-link:hover,
+  .nav-logo:hover,
+  .footer-brand__logo:hover,
+  .property-card__cta:hover,
+  .cta-strip__social-link:hover,
+  .stats-bar__item:hover .stats-bar__icon {
+    transform:  none !important;
+    animation:  none !important;
+  }
+
+  /* ── Trust card icon hover scale ── */
+
+  .trust-card:hover .trust-card__icon {
+    transform: none !important;
+  }
+
+  /* ── Footer nav underline ── */
+
+  .footer-nav__link::after,
+  .footer-nav__link--phone::after {
+    transition: none !important;
+  }
+
+  /* ── Footer social link ── */
+
+  .footer-social-link {
+    transition:
+      background-color var(--anim-fast) var(--ease-out),
+      color            var(--anim-fast) var(--ease-out),
+      border-color     var(--anim-fast) var(--ease-out) !important;
+  }
+
+  /* ── State transitions — instant ── */
+
+  .is-loading,
+  .properties-grid,
+  .hero__stat-number,
+  .hero__float-card.is-loading .hero__float-title,
+  .hero__float-card.is-loading .hero__float-price {
+    transition: none !important;
+  }
+
+  /* ── Section link arrow — no scale, still translate for UX ── */
+
+  .section__link svg {
+    transition: transform var(--anim-fast) var(--ease-out) !important;
+  }
+
+  .section__link:hover svg {
+    transform: translateX(4px) !important;
+  }
+}

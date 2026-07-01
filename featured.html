@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Featured Properties | Sudurpaschim Ghar Jagga Kaarobaar | सुदूरपश्चिम घर जग्गा कारोबार</title>
+
+  <meta name="description"    content="Browse featured properties in Dhangadhi, Kailali, Nepal. Handpicked houses, land, and commercial spaces — verified and ready to view.">
+  <meta name="keywords"       content="featured properties Nepal, ghar jagga Kailali, Dhangadhi real estate, handpicked listings, premium property Nepal">
+  <meta name="author"         content="Sudurpaschim Ghar Jagga Kaarobaar">
+  <meta name="theme-color"    content="#0A1628">
+
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Featured Properties — Sudurpaschim Ghar Jagga Kaarobaar">
+  <meta property="og:description" content="Handpicked featured property listings across Dhangadhi and Kailali, Nepal.">
+  <meta property="og:locale"      content="ne_NP">
+
+  <meta name="description" content="Sudurpaschim Ghar Jagga Kaarobaar is a trusted real estate platform in Sudurpashchim, Nepal. Browse verified land and house listings, connect with buyers and sellers, and receive free property consultation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,600&family=Inter:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       SITE HEADER / NAVIGATION
+       Identical across all pages.
+       "Featured" carries nav-link--active here.
+  ═══════════════════════════════════════════ -->
+  <header class="site-header" id="siteHeader" role="banner">
+    <nav class="nav-wrapper" aria-label="Main navigation">
+
+      <a href="index.html" class="nav-logo"
+         aria-label="Sudurpaschim Ghar Jagga Kaarobaar — go to homepage">
+        <img
+          src="images/logo/logo.jpg"
+          alt="Sudurpaschim Ghar Jagga Kaarobaar logo"
+          class="nav-logo__img"
+          width="48" height="48"
+          onerror="this.style.display='none'"
+        >
+        <div class="nav-logo__text">
+          <span class="nav-logo__primary">Sudurpaschim</span>
+          <span class="nav-logo__secondary">Ghar Jagga Kaarobaar</span>
+        </div>
+      </a>
+
+      <button
+        class="nav-toggle"
+        id="navToggle"
+        aria-label="Open navigation menu"
+        aria-controls="navMenu"
+        aria-expanded="false"
+      >
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu" role="list">
+        <li><a href="index.html"    class="nav-link">Home</a></li>
+        <li><a href="listings.html" class="nav-link">Listings</a></li>
+        <li><a href="featured.html" class="nav-link nav-link--active" aria-current="page">Featured</a></li>
+        <li><a href="about.html"    class="nav-link">About</a></li>
+        <li><a href="contact.html"  class="nav-link">Contact</a></li>
+        <li>
+          <a href="tel:9848841529" class="nav-phone" aria-label="Call us at 9848841529">
+            <svg class="nav-phone__icon" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.4a16 16 0 0 0 6 6l.91-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 18v-.08z"/>
+            </svg>
+            <span>9848841529</span>
+          </a>
+        </li>
+      </ul>
+
+    </nav>
+  </header>
+
+
+  <main id="main-content">
+
+    <!-- ═══════════════════════════════════════════
+         PAGE BANNER
+         ─────────────────────────────────────────
+         Same pattern as listings.html:
+           .hero          — clears fixed nav header
+           .section--dark — navy background
+           .hero__inner   — z-index above gradient
+           .section__inner — centred column
+    ═══════════════════════════════════════════ -->
+    <section
+      class="hero section--dark"
+      id="featuredBanner"
+      aria-labelledby="featuredPageTitle"
+    >
+      <div class="hero__inner">
+        <div class="section__inner">
+
+          <header class="section__header section__header--centered">
+            <div class="section__eyebrow section__eyebrow--light">
+              Handpicked
+            </div>
+            <h1 class="section__title section__title--light" id="featuredPageTitle">
+              Featured Properties
+            </h1>
+            <p class="section__subtitle section__subtitle--light">
+              Carefully selected listings in Dhangadhi and Kailali — our most
+              recommended houses, land, and commercial spaces.
+            </p>
+          </header>
+
+          <!-- Live count badge — populated by Pages.featured() via
+               DOM.setText('featuredCount', 'X featured properties')  -->
+          <div class="hero__actions">
+            <div class="hero__badge">
+              <span class="hero__badge-dot" aria-hidden="true"></span>
+              <span>
+                <strong id="featuredCount" aria-live="polite" aria-atomic="true">
+                  Loading…
+                </strong>
+              </span>
+            </div>
+
+            <a href="listings.html" class="btn btn--ghost-light">
+              Browse All Listings
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         FEATURED PROPERTIES SECTION
+         ─────────────────────────────────────────
+         id="featuredGridAll"
+           → script.js Pages.featured() calls:
+             Renderer.grid('featuredGridAll', featured)
+           All featured properties are rendered here
+           (no limit — shows every featured property).
+
+         aria-busy="true" → set to "false" by JS
+           after cards replace skeleton loaders.
+
+         6 skeleton cards match a 3×2 desktop grid.
+    ═══════════════════════════════════════════ -->
+    <section
+      class="section section--light"
+      id="featuredMain"
+      aria-labelledby="featuredGridHeading"
+    >
+      <div class="section__inner">
+
+        <header class="section__header">
+          <div class="section__eyebrow">Featured</div>
+          <h2 class="section__title" id="featuredGridHeading">All Featured Listings</h2>
+          <p class="section__subtitle">
+            Every property marked as featured by our team. Updated directly
+            from our verified listings database.
+          </p>
+        </header>
+
+        <div
+          class="properties-grid"
+          id="featuredGridAll"
+          role="list"
+          aria-label="Featured property listings"
+          aria-live="polite"
+          aria-busy="true"
+        >
+          <!-- Skeleton loaders shown while API fetches.
+               Replaced by script.js → Renderer.grid('featuredGridAll', …).
+               6 cards = 3-col × 2-row desktop grid. -->
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+        </div>
+
+        <div class="section__footer">
+          <a href="listings.html" class="btn btn--outline">
+            View All Listings
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         CALL-TO-ACTION STRIP
+         Same .cta-strip component used on all pages.
+    ═══════════════════════════════════════════ -->
+    <section class="cta-strip" aria-labelledby="featuredCtaTitle">
+      <div class="cta-strip__inner">
+
+        <div class="cta-strip__content">
+          <h2 class="cta-strip__title" id="featuredCtaTitle">
+            Don't see what<br>
+            <em>you're looking for?</em>
+          </h2>
+          <p class="cta-strip__text">
+            Browse all available listings or contact us directly.
+            New properties are added regularly across Dhangadhi and Kailali.
+          </p>
+        </div>
+
+        <div class="cta-strip__actions">
+          <a href="listings.html"  class="btn btn--gold btn--large">Browse All Listings</a>
+          <a href="contact.html"   class="btn btn--ghost-light btn--large">Contact Us</a>
+
+          <div class="cta-strip__contact">
+            <a href="tel:9848841529" class="cta-strip__phone" aria-label="Call 9848841529">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.4a16 16 0 0 0 6 6l.91-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 18v-.08z"/>
+              </svg>
+              9848841529
+            </a>
+            <div class="cta-strip__socials">
+              <a href="https://www.facebook.com/profile.php?id=100064083400124"
+                 class="cta-strip__social-link"
+                 target="_blank" rel="noopener noreferrer"
+                 aria-label="Facebook page">Facebook</a>
+              <a href="https://www.instagram.com/sudurpaschimgharjagga/"
+                 class="cta-strip__social-link"
+                 target="_blank" rel="noopener noreferrer"
+                 aria-label="Instagram page">Instagram</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════════
+       SITE FOOTER — identical to all other pages.
+       id="footerYear" populated by UI.setFooterYear()
+  ═══════════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+
+      <div class="site-footer__top">
+
+        <div class="footer-brand">
+          <a href="index.html" class="footer-brand__logo" aria-label="Homepage">
+            <img
+              src="images/logo/logo.jpg"
+              alt="Sudurpaschim Ghar Jagga Kaarobaar"
+              class="footer-brand__img"
+              width="56" height="56"
+              onerror="this.style.display='none'"
+            >
+          </a>
+          <p class="footer-brand__name">Sudurpaschim<br>Ghar Jagga Kaarobaar</p>
+          <p class="footer-brand__devanagari" lang="ne">सुदूरपश्चिम घर जग्गा कारोबार</p>
+          <p class="footer-brand__location">📍 Dhangadhi, Kailali, Nepal</p>
+          <div class="footer-brand__socials">
+            <a href="https://www.facebook.com/profile.php?id=100064083400124"
+               class="footer-social-link" target="_blank" rel="noopener noreferrer"
+               aria-label="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor"
+                   xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            </a>
+            <a href="https://www.instagram.com/sudurpaschimgharjagga/"
+               class="footer-social-link" target="_blank" rel="noopener noreferrer"
+               aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <nav class="footer-nav" aria-label="Footer navigation">
+
+          <div class="footer-nav__group">
+            <h3 class="footer-nav__heading">Pages</h3>
+            <ul class="footer-nav__list" role="list">
+              <li><a href="index.html"    class="footer-nav__link">Home</a></li>
+              <li><a href="listings.html" class="footer-nav__link">All Listings</a></li>
+              <li><a href="featured.html" class="footer-nav__link">Featured</a></li>
+              <li><a href="about.html"    class="footer-nav__link">About Us</a></li>
+              <li><a href="contact.html"  class="footer-nav__link">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-nav__group">
+            <h3 class="footer-nav__heading">Property Types</h3>
+            <ul class="footer-nav__list" role="list">
+              <li><a href="listings.html?type=house"      class="footer-nav__link">Houses</a></li>
+              <li><a href="listings.html?type=land"       class="footer-nav__link">Land</a></li>
+              <li><a href="listings.html?type=commercial" class="footer-nav__link">Commercial</a></li>
+              <li><a href="listings.html?type=apartment"  class="footer-nav__link">Apartments</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-nav__group">
+            <h3 class="footer-nav__heading">Contact</h3>
+            <ul class="footer-nav__list" role="list">
+              <li>
+                <a href="tel:9848841529"
+                   class="footer-nav__link footer-nav__link--phone"
+                   aria-label="Call 9848841529">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.4a16 16 0 0 0 6 6l.91-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 18v-.08z"/>
+                  </svg>
+                  9848841529
+                </a>
+              </li>
+              <li>
+                <a href="https://www.facebook.com/profile.php?id=100064083400124"
+                   class="footer-nav__link" target="_blank" rel="noopener noreferrer">
+                  Facebook Page
+                </a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/sudurpaschimgharjagga/"
+                   class="footer-nav__link" target="_blank" rel="noopener noreferrer">
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a href="contact.html" class="footer-nav__link">Send a Message</a>
+              </li>
+            </ul>
+          </div>
+
+        </nav>
+
+      </div><!-- /site-footer__top -->
+
+      <div class="site-footer__bottom">
+        <p class="site-footer__copy">
+          &copy; <span id="footerYear">2025</span>
+          Sudurpaschim Ghar Jagga Kaarobaar. All rights reserved.
+        </p>
+        <p class="site-footer__note">
+          Dhangadhi, Kailali, Nepal &nbsp;·&nbsp; Real Estate Listings Platform
+        </p>
+      </div>
+
+    </div><!-- /site-footer__inner -->
+  </footer>
+
+
+  <!--
+    script.js loaded at end of body (non-blocking).
+
+    On featured.html it runs:
+      detectPage()           → returns 'featured'
+      API.fetchAll()         → fetches all properties from Google Sheets
+      Pages.featured(data)   →
+        • Filters.featured(data)  → keeps only featured === 'TRUE'
+        • DOM.setText('featuredCount', 'X featured properties')
+        • Renderer.grid('featuredGridAll', featured)
+          – renders all featured property cards (no limit)
+          – each card links to property.html?id=N
+          – empty state shown if no featured properties exist
+          – error state shown if API fails
+      UI.initRevealClasses() → adds .reveal to below-fold elements
+      UI.initScrollReveal()  → IntersectionObserver activates
+  -->
+  <script src="js/script.js"></script>
+
+</body>
+</html>

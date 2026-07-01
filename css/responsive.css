@@ -1,0 +1,1669 @@
+/* ============================================================
+   SUDURPASCHIM GHAR JAGGA KAAROBAAR
+   Responsive Stylesheet — css/responsive.css
+   Dhangadhi, Kailali, Nepal
+   ============================================================
+
+   PURPOSE
+   ───────────────────────────────────────────────────────────
+   This file supplements style.css. It ONLY adds what that
+   file does not already handle. Never duplicates existing rules.
+
+   style.css already covers:
+     768px  — tablet horizontal nav, side-by-side hero, 2-col grid
+    1024px  — 3-col grid, 4-col trust, absolute float card
+    1280px  — max headline size, widest container padding
+
+   This file adds:
+     XS    max-width: 359px  — micro phones (< 360px)
+     LS    landscape + short — landscape phones
+     SM    min-width: 480px  — large phones
+     MD    min-width: 640px  — phablet / small tablet portrait
+     [768px — handled in style.css]
+     LG    min-width: 900px  — wide tablet / small laptop gap
+     [1024px — handled in style.css]
+     XL    min-width: 1200px — standard desktop gap
+     [1280px — handled in style.css]
+     2XL   min-width: 1440px — large desktop
+     3XL   min-width: 1800px — ultra-wide displays
+
+   RULE: Supplement, never duplicate.
+         If a rule exists in style.css, do not repeat it here.
+   ============================================================
+
+   TABLE OF CONTENTS
+   ───────────────────────────────────────────────────────────
+    1.  Touch Device Targets  (capability query)
+    1b. Images — Responsive Handling  (all sizes)
+    2.  XS  — max-width: 359px   (micro phones)
+    3.  LS  — landscape short screens
+    4.  SM  — min-width: 480px   (large phones)
+    5.  MD  — min-width: 640px   (phablet / small tablet)
+    6.  MD Restore — min-width: 768px (dividers + frame ratio)
+    7.  LG  — min-width: 900px   (wide tablet / laptop gap)
+    8.  XL  — min-width: 1200px  (standard desktop gap)
+    9.  2XL — min-width: 1440px  (large desktop)
+   10.  3XL — min-width: 1800px  (ultra-wide)
+   11.  Intermediate — min-width: 1600px  (QHD gap fill)
+   12.  Print  (production print styles)
+   ============================================================ */
+
+
+/* ============================================================
+   1. TOUCH DEVICE TARGETS
+   Ensures 44×44px minimum tap targets on touch screens.
+   Applied via capability media query, not size.
+   ============================================================ */
+
+@media (hover: none) and (pointer: coarse) {
+
+  /* Base .btn is ~36px tall — boost to meet WCAG 2.5.5 */
+  .btn {
+    min-height: 44px;
+  }
+
+  /* Mobile nav links already have space-4 vertical padding;
+     enforce the minimum here explicitly */
+  .nav-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Social icon links in footer */
+  .footer-social-link {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* Phone link in CTA strip */
+  .cta-strip__phone {
+    min-height: 44px;
+  }
+
+  /* Property card CTA — small by default, needs touch boost */
+  .property-card__cta {
+    min-height: 36px;
+    padding-block: var(--space-2);
+  }
+
+  /* Section "view all" links */
+  .section__link {
+    min-height: 44px;
+    align-items: center;
+  }
+
+  /* Footer nav links */
+  .footer-nav__link {
+    min-height: 36px;
+    align-items: center;
+  }
+
+  /* Disable hover-lift on touch (no hover state exists) */
+  .property-card:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .trust-card:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.07);
+  }
+}
+
+
+/* ============================================================
+   IMAGES — Responsive Handling
+   Ensures all images remain within their containers,
+   maintain correct proportions, and load efficiently
+   across all viewport sizes.
+   ============================================================ */
+
+/* ── Base image containment (supplements reset) ── */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Hero frame images — always fill their container */
+.hero__frame-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Property card images — fill the 16:10 aspect-ratio container */
+.property-card__image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Logo images — never stretch or distort */
+.nav-logo__img,
+.footer-brand__img {
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* SVG icons — prevent sizing issues in flex/grid containers */
+svg {
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+/* ── Small screen image adjustments ── */
+@media (max-width: 479px) {
+
+  /* Hero frame: limit height on portrait phones so the
+     image doesn't dominate the stacked layout */
+  .hero__frame {
+    max-height: 260px;
+  }
+
+  /* Property card image: shorter on single-column mobile */
+  .property-card__image-wrap {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* ── Tablet image adjustments ── */
+@media (min-width: 640px) and (max-width: 767px) {
+
+  /* At 640px the hero frame is 16/9. On 2-col property
+     grid, card images are now narrower — restore 4/3 for
+     better visual weight in the grid. */
+  .property-card__image-wrap {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ── Desktop image quality ── */
+@media (min-width: 1024px) {
+
+  /* On desktop, property card images can be slightly taller
+     in the 3-col grid for a more editorial feel */
+  .property-card__image-wrap {
+    aspect-ratio: 3 / 2;
+  }
+}
+
+/* ── Retina / High-DPI displays ── */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+
+  /* Sharper box-shadow rendering on HiDPI */
+  .property-card {
+    box-shadow:
+      0 0.5px 1.5px rgba(10, 22, 40, 0.07),
+      0 1px 3px   rgba(10, 22, 40, 0.04);
+  }
+
+  /* Hero frame gets crisper shadow on retina */
+  .hero__frame {
+    box-shadow:
+      0 14px 44px rgba(10, 22, 40, 0.15),
+      0 5px  14px rgba(10, 22, 40, 0.08);
+  }
+}
+
+
+/* ============================================================
+   2. XS — max-width: 359px (Micro Phones)
+   Handles screens below 360px: iPhone SE (1st gen), Galaxy A0x,
+   budget Android handsets. These need tighter spacing and
+   smaller type to remain readable and functional.
+   ============================================================ */
+
+@media (max-width: 359px) {
+
+  /* ── Design tokens: tighter padding on tiny screens ── */
+  :root {
+    --container-pad: var(--space-4);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Navigation
+  ──────────────────────────────────────────────────────── */
+
+  /* Hide the descriptive subtitle — saves ~100px of logo width */
+  .nav-logo__secondary {
+    display: none;
+  }
+
+  .nav-logo__primary {
+    font-size: var(--text-sm);
+  }
+
+  .nav-logo__img {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Hero
+  ──────────────────────────────────────────────────────── */
+
+  /* Reduce top clearance so hero content starts higher */
+  .hero {
+    padding-top: calc(var(--nav-height) + var(--space-8));
+    padding-bottom: var(--space-12);
+  }
+
+  /* Headline: step down from text-4xl (36px) → text-3xl (30px)
+     to prevent overflow on 320px screens */
+  .hero__headline {
+    font-size: var(--text-3xl);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  /* Devanagari: step down to base size */
+  .hero__devanagari {
+    font-size: var(--text-base);
+  }
+
+  /* Description: slightly smaller */
+  .hero__description {
+    font-size: var(--text-sm);
+  }
+
+  /* CTA buttons: stack vertically and fill full width */
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Stats row: hide dividers to prevent awkward wrapping
+     on screens where 3 stats + 2 dividers don't fit in one row */
+  .hero__stat-divider {
+    display: none;
+  }
+
+  .hero__stats {
+    gap: var(--space-4);
+  }
+
+  .hero__stat-number {
+    font-size: var(--text-xl);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Stats Bar
+  ──────────────────────────────────────────────────────── */
+
+  /* 4 items + 3 dividers cannot fit in a flex row at < 360px.
+     Switch to a clean 2×2 grid and hide the decorative dividers. */
+  .stats-bar__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+
+  .stats-bar__divider {
+    display: none;
+  }
+
+  .stats-bar__text strong {
+    font-size: var(--text-lg);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Sections
+  ──────────────────────────────────────────────────────── */
+
+  /* Reduce vertical breathing room to fit more content above fold */
+  .section {
+    padding-block: var(--space-14);
+  }
+
+  .section__inner {
+    gap: var(--space-8);
+  }
+
+  .section__title {
+    font-size: var(--text-2xl);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Skeleton cards
+  ──────────────────────────────────────────────────────── */
+
+  /* Reduce skeleton height on tiny screens */
+  .skeleton-card {
+    height: 320px;
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Trust cards
+  ──────────────────────────────────────────────────────── */
+
+  .trust-card {
+    padding: var(--space-5);
+  }
+
+  .trust-card__title {
+    font-size: var(--text-base);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     CTA Strip
+  ──────────────────────────────────────────────────────── */
+
+  .cta-strip {
+    padding-block: var(--space-14);
+  }
+
+  .cta-strip__title {
+    font-size: var(--text-2xl);
+  }
+
+  .cta-strip__text {
+    font-size: var(--text-sm);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Footer
+  ──────────────────────────────────────────────────────── */
+
+  .site-footer__top {
+    padding-block: var(--space-10);
+    gap: var(--space-8);
+  }
+
+  .footer-brand__name {
+    font-size: var(--text-sm);
+  }
+
+  .footer-nav {
+    gap: var(--space-6);
+  }
+}
+
+
+/* ============================================================
+   3. LS — Landscape Short Screens
+   Short phones in landscape (iPhone SE, Galaxy, etc.) have
+   very limited vertical space. Remove the full-height hero
+   constraint so the page doesn't force excessive scrolling.
+   ============================================================ */
+
+@media (max-height: 600px) and (orientation: landscape) {
+
+  /* Remove full-viewport-height constraint */
+  .hero {
+    min-height: auto;
+    padding-top: calc(var(--nav-height) + var(--space-10));
+    padding-bottom: var(--space-10);
+  }
+
+  /* Compress headline for tight vertical space */
+  .hero__headline {
+    font-size: var(--text-3xl);
+  }
+
+  /* Keep hero inner vertically compact */
+  .hero__inner {
+    gap: var(--space-6);
+  }
+
+  /* Reduce hero stats gap */
+  .hero__stats {
+    padding-top: var(--space-4);
+  }
+
+  /* Sections: reduce vertical padding in landscape too */
+  .section {
+    padding-block: var(--space-14);
+  }
+
+  .cta-strip {
+    padding-block: var(--space-14);
+  }
+}
+
+
+/* ============================================================
+   4. SM — min-width: 480px (Large Phones)
+   Targets larger Android handsets, iPhone Pro Max (430px+),
+   and similar wide-screen phones. More room to breathe.
+   ============================================================ */
+
+@media (min-width: 480px) {
+
+  /* ── Container ── */
+  :root {
+    --container-pad: var(--space-6);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Hero
+  ──────────────────────────────────────────────────────── */
+
+  /* Fluid headline: scales from 36px at 480px toward 48px at 768px.
+     clamp(base, fluid, cap) — base: text-4xl, cap: text-5xl */
+  .hero__headline {
+    font-size: clamp(
+      var(--text-4xl),
+      calc(1.5rem + 3.5vw),
+      var(--text-5xl)
+    );
+  }
+
+  .hero__devanagari {
+    font-size: var(--text-xl);
+  }
+
+  /* Restore stacked buttons to row on larger phones */
+  .hero__actions {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .hero__actions .btn {
+    width: auto;
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Stats Bar
+  ──────────────────────────────────────────────────────── */
+
+  /* At 480px, 4 items fit in 2 columns cleanly.
+     Keep the grid but tighten gap slightly. */
+  .stats-bar__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+  }
+
+  .stats-bar__divider {
+    display: none;
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Sections
+  ──────────────────────────────────────────────────────── */
+
+  .section {
+    padding-block: var(--space-16);
+  }
+
+  .section__title {
+    font-size: var(--text-3xl);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Trust cards — 2 columns from 480px on dark section
+  ──────────────────────────────────────────────────────── */
+
+  .trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     CTA Strip
+  ──────────────────────────────────────────────────────── */
+
+  .cta-strip__title {
+    font-size: var(--text-2xl);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Footer
+  ──────────────────────────────────────────────────────── */
+
+  /* Two-column footer nav on large phones */
+  .footer-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+}
+
+
+/* ============================================================
+   5. MD — min-width: 640px (Phablet / Small Tablet Portrait)
+   iPad mini portrait, Galaxy Tab, and wide phablets.
+   style.css moves the grid to 2-col at 768px; we do it earlier
+   here for a better reading experience on these devices.
+   ============================================================ */
+
+@media (min-width: 640px) {
+
+  /* ── Container padding step up ── */
+  :root {
+    --container-pad: var(--space-7);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Navigation
+  ──────────────────────────────────────────────────────── */
+
+  /* Logo secondary text fits on wider screens now */
+  .nav-logo__secondary {
+    display: block;
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Hero
+  ──────────────────────────────────────────────────────── */
+
+  /* At 640px the hero is still stacked (side-by-side starts at 768px).
+     The frame fills full column width; 4/3 would be 480px tall.
+     Switch to 16/9 so the frame is proportionally wider and shorter. */
+  .hero__frame {
+    aspect-ratio: 16 / 9;
+  }
+
+  /* Headline nudge: sits between 480px fluid value and 768px text-5xl */
+  .hero__headline {
+    font-size: clamp(
+      var(--text-4xl),
+      calc(1.75rem + 3vw),
+      var(--text-5xl)
+    );
+  }
+
+  /* Description back to base size — more room on 640px screens */
+  .hero__description {
+    font-size: var(--text-base);
+  }
+
+  /* Hero stats: all three items fit side by side — restore dividers */
+  .hero__stat-divider {
+    display: block;
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Stats Bar
+  ──────────────────────────────────────────────────────── */
+
+  /* At 640px: 4 items × 130px + 3 × 20px gaps = 580px.
+     Available (640 - 2×28) = 584px → just fits without dividers.
+     Switch from 2×2 grid back to 4-in-a-row flex. */
+  .stats-bar__inner {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    gap: var(--space-4);
+  }
+
+  /* Keep dividers hidden at 640 — they need more width (768px) */
+  .stats-bar__divider {
+    display: none;
+  }
+
+  .stats-bar__item {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Properties Grid — 2 columns early (moved from 768px)
+  ──────────────────────────────────────────────────────── */
+
+  /* This is a key UX improvement: 2-column grid at 640px
+     instead of waiting until 768px, which feels late on tablets. */
+  .properties-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+  }
+
+  /* Skeleton cards match the earlier grid shift */
+  .skeleton-card {
+    height: 360px;
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Trust Grid — 2 columns earlier
+  ──────────────────────────────────────────────────────── */
+
+  .trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Sections
+  ──────────────────────────────────────────────────────── */
+
+  .section {
+    padding-block: var(--space-18);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     CTA Strip
+  ──────────────────────────────────────────────────────── */
+
+  .cta-strip__title {
+    font-size: var(--text-3xl);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Footer
+  ──────────────────────────────────────────────────────── */
+
+  /* Three-column footer nav on small tablets */
+  .footer-nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+
+  .site-footer__top {
+    gap: var(--space-10);
+  }
+}
+
+
+/* ============================================================
+   6. MD RESTORE — min-width: 768px
+   style.css takes full control of layout at 768px. This block
+   restores everything that responsive.css suppressed or altered
+   at narrower widths. Rules here coordinate with style.css;
+   they do not repeat what style.css already sets.
+   ============================================================ */
+
+@media (min-width: 768px) {
+
+  /* ────────────────────────────────────────────────────────
+     Navigation
+  ──────────────────────────────────────────────────────── */
+
+  /* Restore logo secondary text hidden on XS screens */
+  .nav-logo__secondary {
+    display: block;
+  }
+
+  /* Restore logo image to standard size */
+  .nav-logo__img {
+    width: 42px;
+    height: 42px;
+  }
+
+  /* Restore logo primary font size */
+  .nav-logo__primary {
+    font-size: var(--text-base);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Hero
+  ──────────────────────────────────────────────────────── */
+
+  /* Restore hero frame to 4:3 — at 768px+ the hero is
+     side-by-side, so the frame sits in a ~50% column.
+     4/3 gives better proportions than the 16/9 we used
+     at 640px to prevent the stacked frame being too tall. */
+  .hero__frame {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Restore hero stat dividers hidden on small screens */
+  .hero__stat-divider {
+    display: block;
+  }
+
+  /* Restore hero actions to natural row flow */
+  .hero__actions {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .hero__actions .btn {
+    width: auto;
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Stats Bar
+  ──────────────────────────────────────────────────────── */
+
+  /* Restore stats bar from 2×2 grid back to flex row.
+     style.css sets flex-wrap: nowrap here, so dividers
+     render cleanly in a single row with space-between. */
+  .stats-bar__inner {
+    display: flex;
+    grid-template-columns: unset;
+  }
+
+  /* Restore the decorative dividers between stat items */
+  .stats-bar__divider {
+    display: block;
+  }
+
+  /* Restore stat items to natural flex sizing */
+  .stats-bar__item {
+    flex: 1;
+    min-width: 130px;
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Footer Nav
+  ──────────────────────────────────────────────────────── */
+
+  /* Restore footer nav from CSS grid (set at 480/640px)
+     back to flex row — style.css handles the row layout here */
+  .footer-nav {
+    display: flex;
+    grid-template-columns: unset;
+  }
+}
+
+
+/* ============================================================
+   7. LG — min-width: 900px (Wide Tablet / Small Laptop Gap)
+   Fills the range between style.css's 768px and 1024px.
+   Targets: iPad landscape, Surface, 13" laptops at lower DPI.
+   ============================================================ */
+
+@media (min-width: 900px) {
+
+  /* ────────────────────────────────────────────────────────
+     Navigation
+  ──────────────────────────────────────────────────────── */
+
+  /* More generous nav link size between 768 and 1024 */
+  .nav-link {
+    font-size: var(--text-sm);
+    padding: var(--space-2) var(--space-4);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Hero
+  ──────────────────────────────────────────────────────── */
+
+  /* Fluid scaling: 48px (text-5xl at 768px) → 60px (text-6xl at 1024px).
+     clamp ties it to viewport width in this gap range. */
+  .hero__headline {
+    font-size: clamp(
+      var(--text-5xl),
+      calc(2.5rem + 2vw),
+      var(--text-6xl)
+    );
+  }
+
+  /* Widen the hero content column */
+  .hero__content {
+    max-width: 560px;
+  }
+
+  /* Visual column can grow wider in this gap */
+  .hero__visual {
+    max-width: 520px;
+  }
+
+  /* Hero inner: more gap between columns */
+  .hero__inner {
+    gap: var(--space-14);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Sections
+  ──────────────────────────────────────────────────────── */
+
+  .section {
+    padding-block: var(--space-20);
+  }
+
+  /* Section title: fluid step between text-3xl and text-4xl */
+  .section__title {
+    font-size: clamp(
+      var(--text-3xl),
+      calc(1.5rem + 2vw),
+      var(--text-4xl)
+    );
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Property cards
+  ──────────────────────────────────────────────────────── */
+
+  /* Card body: slightly more internal padding at this size */
+  .property-card__body {
+    padding: var(--space-6);
+    gap: var(--space-3);
+  }
+
+  .property-card__footer {
+    padding: var(--space-4) var(--space-6);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Trust cards
+  ──────────────────────────────────────────────────────── */
+
+  /* Trust grid: 4-col earlier than style.css's 1024px */
+  .trust-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .trust-card {
+    padding: var(--space-8);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     CTA Strip
+  ──────────────────────────────────────────────────────── */
+
+  .cta-strip {
+    padding-block: var(--space-24);
+  }
+
+  /* Fluid CTA title */
+  .cta-strip__title {
+    font-size: clamp(
+      var(--text-3xl),
+      calc(1.5rem + 2vw),
+      var(--text-4xl)
+    );
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Footer
+  ──────────────────────────────────────────────────────── */
+
+  .footer-brand {
+    width: 260px;
+  }
+
+  .footer-nav {
+    gap: var(--space-8);
+  }
+}
+
+
+/* ============================================================
+   8. XL — min-width: 1200px (Standard Desktop Gap)
+   Fills the range between style.css's 1024px and 1280px.
+   Targets: 1080p monitors, 14–15" laptops at full resolution.
+   ============================================================ */
+
+@media (min-width: 1200px) {
+
+  /* ────────────────────────────────────────────────────────
+     Hero
+  ──────────────────────────────────────────────────────── */
+
+  /* Fluid headline between text-6xl (60px) and text-7xl (72px) */
+  .hero__headline {
+    font-size: clamp(
+      var(--text-6xl),
+      calc(3rem + 2.5vw),
+      var(--text-7xl)
+    );
+  }
+
+  /* Widen content column in this gap */
+  .hero__content {
+    max-width: 580px;
+  }
+
+  .hero__visual {
+    max-width: 560px;
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Sections
+  ──────────────────────────────────────────────────────── */
+
+  .section {
+    padding-block: var(--space-24);
+  }
+
+  .section__inner {
+    gap: var(--space-14);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Properties grid
+  ──────────────────────────────────────────────────────── */
+
+  /* Increase card gap for more breathing room on desktop */
+  .properties-grid {
+    gap: var(--space-7);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Property card
+  ──────────────────────────────────────────────────────── */
+
+  .property-card__title {
+    font-size: var(--text-lg);
+  }
+
+  .property-card__price > strong,
+  .property-card__price-value {
+    font-size: var(--text-xl);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     CTA Strip
+  ──────────────────────────────────────────────────────── */
+
+  .cta-strip {
+    padding-block: var(--space-28);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Footer
+  ──────────────────────────────────────────────────────── */
+
+  .site-footer__top {
+    padding-block: var(--space-20);
+    gap: var(--space-16);
+  }
+}
+
+
+/* ============================================================
+   9. 2XL — min-width: 1440px (Large Desktop)
+   Targets: 1440p monitors, large MacBook Pro, iMac.
+   style.css's 1280px rules are already applied at this point;
+   this layer refines proportions for the extra screen space.
+   ============================================================ */
+
+@media (min-width: 1440px) {
+
+  /* ── Container: increase side padding further ── */
+  :root {
+    --container-pad: var(--space-16);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Navigation
+  ──────────────────────────────────────────────────────── */
+
+  .nav-logo__primary {
+    font-size: var(--text-lg);
+  }
+
+  .nav-logo__secondary {
+    font-size: var(--text-xs);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Hero
+  ──────────────────────────────────────────────────────── */
+
+  /* Maximum headline — text-7xl (72px) already set by 1280px in style.css.
+     This layer widens the columns only. */
+  .hero__content {
+    max-width: 620px;
+  }
+
+  .hero__visual {
+    max-width: 660px;
+  }
+
+  /* More gap between hero columns */
+  .hero__inner {
+    gap: var(--space-20);
+  }
+
+  /* Float card: push further out for more dramatic overlap */
+  .hero__float-card {
+    right: calc(-1 * var(--space-10));
+    bottom: calc(-1 * var(--space-10));
+    width: 230px;
+  }
+
+  /* More clearance for the overhanging float card */
+  .hero__frame {
+    margin-bottom: var(--space-12);
+  }
+
+  /* Hero section: taller top padding on large displays */
+  .hero {
+    padding-top: calc(var(--nav-height) + var(--space-20));
+    padding-bottom: var(--space-24);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Sections
+  ──────────────────────────────────────────────────────── */
+
+  .section {
+    padding-block: var(--space-28);
+  }
+
+  .section__inner {
+    gap: var(--space-16);
+  }
+
+  .section__title {
+    font-size: var(--text-4xl);
+  }
+
+  .section__subtitle {
+    font-size: var(--text-lg);
+    max-width: 58ch;
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Stats Bar
+  ──────────────────────────────────────────────────────── */
+
+  .stats-bar {
+    padding-block: var(--space-10);
+  }
+
+  .stats-bar__icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .stats-bar__icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .stats-bar__text strong {
+    font-size: var(--text-2xl);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Properties Grid
+  ──────────────────────────────────────────────────────── */
+
+  .properties-grid {
+    gap: var(--space-8);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Property Card
+  ──────────────────────────────────────────────────────── */
+
+  .property-card__body {
+    padding: var(--space-7);
+    gap: var(--space-3);
+  }
+
+  .property-card__footer {
+    padding: var(--space-5) var(--space-7);
+  }
+
+  .property-card__title {
+    font-size: var(--text-lg);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Trust Section
+  ──────────────────────────────────────────────────────── */
+
+  .trust-card {
+    padding: var(--space-10);
+  }
+
+  .trust-card__title {
+    font-size: var(--text-xl);
+  }
+
+  .trust-card__icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .trust-card__icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* ────────────────────────────────────────────────────────
+     CTA Strip
+  ──────────────────────────────────────────────────────── */
+
+  .cta-strip {
+    padding-block: var(--space-32);
+  }
+
+  .cta-strip__title {
+    font-size: clamp(var(--text-4xl), 4vw, var(--text-5xl));
+  }
+
+  .cta-strip__text {
+    font-size: var(--text-lg);
+    max-width: 50ch;
+  }
+
+  .cta-strip__actions {
+    width: 340px;
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Footer
+  ──────────────────────────────────────────────────────── */
+
+  .site-footer__top {
+    padding-block: var(--space-24);
+    gap: var(--space-20);
+  }
+
+  .footer-brand {
+    width: 320px;
+  }
+
+  .footer-brand__name {
+    font-size: var(--text-lg);
+  }
+
+  .footer-brand__img {
+    width: 68px;
+    height: 68px;
+  }
+
+  .footer-nav {
+    gap: var(--space-14);
+  }
+
+  .footer-nav__link {
+    font-size: var(--text-base);
+  }
+
+  .site-footer__bottom {
+    padding-block: var(--space-8);
+  }
+
+  .site-footer__copy {
+    font-size: var(--text-base);
+  }
+}
+
+
+/* ============================================================
+   INTERMEDIATE — min-width: 1600px
+   Fills the gap between the 1440px and 1800px breakpoints.
+   Targets: QHD monitors (2560×1440 at 150% DPI), widescreen
+   laptops, and gaming monitors at native resolution.
+   ============================================================ */
+
+@media (min-width: 1600px) {
+
+  /* ── Container padding: step up before ultra-wide ── */
+  :root {
+    --container-pad: var(--space-20);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Hero
+  ──────────────────────────────────────────────────────── */
+
+  .hero {
+    padding-top: calc(var(--nav-height) + var(--space-24));
+    padding-bottom: var(--space-28);
+  }
+
+  .hero__content {
+    max-width: 640px;
+  }
+
+  .hero__visual {
+    max-width: 680px;
+  }
+
+  .hero__inner {
+    gap: var(--space-24);
+  }
+
+  /* Float card: step outward as screen grows */
+  .hero__float-card {
+    right:  calc(-1 * var(--space-12));
+    bottom: calc(-1 * var(--space-12));
+    width:  240px;
+  }
+
+  .hero__frame {
+    margin-bottom: var(--space-14);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Sections
+  ──────────────────────────────────────────────────────── */
+
+  .section {
+    padding-block: var(--space-28);
+  }
+
+  .section__inner {
+    gap: var(--space-16);
+  }
+
+  .section__subtitle {
+    font-size: var(--text-lg);
+    max-width: 60ch;
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Stats Bar
+  ──────────────────────────────────────────────────────── */
+
+  .stats-bar {
+    padding-block: var(--space-10);
+  }
+
+  .stats-bar__text strong {
+    font-size: var(--text-2xl);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Properties Grid
+  ──────────────────────────────────────────────────────── */
+
+  .properties-grid {
+    gap: var(--space-9);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Property Cards
+  ──────────────────────────────────────────────────────── */
+
+  .property-card__body {
+    padding: var(--space-8);
+  }
+
+  .property-card__footer {
+    padding: var(--space-5) var(--space-8);
+  }
+
+  /* ────────────────────────────────────────────────────────
+     CTA Strip
+  ──────────────────────────────────────────────────────── */
+
+  .cta-strip {
+    padding-block: var(--space-28);
+  }
+
+  .cta-strip__title {
+    font-size: clamp(var(--text-4xl), 3.5vw, var(--text-5xl));
+  }
+
+  .cta-strip__actions {
+    width: 360px;
+  }
+
+  /* ────────────────────────────────────────────────────────
+     Footer
+  ──────────────────────────────────────────────────────── */
+
+  .site-footer__top {
+    padding-block: var(--space-24);
+    gap: var(--space-24);
+  }
+
+  .footer-brand {
+    width: 340px;
+  }
+
+  .footer-nav {
+    gap: var(--space-16);
+  }
+}
+
+
+/* ============================================================
+   10. 3XL — min-width: 1800px (Ultra-Wide Displays)
+   Targets: 4K monitors, ultrawide, and large curved screens.
+   Container max-width (1200px) is already locked — this layer
+   ensures the surrounding space feels intentional, not empty.
+   ============================================================ */
+
+@media (min-width: 1800px) {
+
+  /* ── Site header: taller on ultra-wide for better proportions ── */
+  :root {
+    --nav-height: 80px;
+  }
+
+  /* ── Generous section breathing room on very large screens ── */
+  .section {
+    padding-block: var(--space-32);
+  }
+
+  .cta-strip {
+    padding-block: var(--space-32);
+  }
+
+  /* ── Hero: maximize vertical space usage ── */
+  .hero {
+    padding-top: calc(var(--nav-height) + var(--space-24));
+    padding-bottom: var(--space-32);
+  }
+
+  .hero__content {
+    max-width: 680px;
+  }
+
+  .hero__visual {
+    max-width: 720px;
+  }
+
+  /* ── Float card: widest setting on ultra-wide ── */
+  .hero__float-card {
+    width: 260px;
+    padding: var(--space-5) var(--space-6);
+  }
+
+  /* ── Typography: scale up at extreme widths ── */
+  .hero__devanagari {
+    font-size: var(--text-3xl);
+  }
+
+  .hero__description {
+    font-size: var(--text-xl);
+    max-width: 55ch;
+  }
+
+  .hero__stat-number {
+    font-size: var(--text-3xl);
+  }
+
+  /* ── Stats bar: maximum size ── */
+  .stats-bar {
+    padding-block: var(--space-12);
+  }
+
+  /* ── Property cards: maximum gap ── */
+  .properties-grid {
+    gap: var(--space-10);
+  }
+
+  /* ── Trust cards: maximum padding ── */
+  .trust-card {
+    padding: var(--space-12);
+  }
+
+  /* ── Footer: maximum vertical space ── */
+  .site-footer__top {
+    padding-block: var(--space-28);
+  }
+}
+
+
+/* ============================================================
+   PRINT STYLES
+   Ensures the page renders cleanly for printing.
+   Removes interactive elements, dark backgrounds,
+   and converts the layout to a single readable column.
+   ============================================================ */
+
+@media print {
+
+  /* ── Global print resets ── */
+
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* ── Hide non-essential UI ── */
+
+  /* Navigation — not useful in print */
+  .site-header,
+  .nav-toggle,
+  .nav-phone {
+    display: none !important;
+  }
+
+  /* CTA strip — interactive, not print-appropriate */
+  .cta-strip {
+    display: none !important;
+  }
+
+  /* Floating card — overlapping element, hide in print */
+  .hero__float-card {
+    display: none !important;
+  }
+
+  /* Stats bar — secondary content, hide to save space */
+  .stats-bar {
+    display: none !important;
+  }
+
+  /* Section "view all" links — URLs not useful in print */
+  .section__link {
+    display: none !important;
+  }
+
+  /* Property card CTA buttons */
+  .property-card__cta {
+    display: none !important;
+  }
+
+  /* Section footer buttons */
+  .section__footer {
+    display: none !important;
+  }
+
+  /* Footer socials */
+  .footer-brand__socials {
+    display: none !important;
+  }
+
+  /* ── Layout adjustments ── */
+
+  /* Remove fixed positioning from header */
+  .site-header {
+    position: static;
+  }
+
+  /* Hero: remove min-height, no viewport constraint in print */
+  .hero {
+    min-height: auto;
+    padding-top: var(--space-10);
+    padding-bottom: var(--space-10);
+    border-bottom: 1px solid #ccc;
+  }
+
+  /* Hero: stack vertically for print */
+  .hero__inner {
+    flex-direction: column;
+  }
+
+  /* Hero visual frame: limit height for print */
+  .hero__visual {
+    max-width: 60%;
+    margin-inline: auto;
+  }
+
+  /* Hero frame: print-safe aspect ratio */
+  .hero__frame {
+    aspect-ratio: 16 / 9;
+    max-height: 200px;
+  }
+
+  /* Sections: remove heavy vertical padding */
+  .section {
+    padding-block: var(--space-10);
+    break-inside: avoid;
+  }
+
+  /* Property cards: 2-column print grid */
+  .properties-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  /* Property card: print-safe border */
+  .property-card {
+    border: 1px solid #ccc;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Trust grid: 2 columns in print */
+  .trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Trust card: print border */
+  .trust-card {
+    border: 1px solid #ccc;
+  }
+
+  /* Footer: single column in print */
+  .site-footer__top {
+    flex-direction: column;
+    gap: var(--space-6);
+    padding-block: var(--space-8);
+  }
+
+  .footer-nav {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .footer-nav__group {
+    break-inside: avoid;
+  }
+
+  /* ── Typography ── */
+
+  /* Headline: reasonable print size */
+  .hero__headline {
+    font-size: 28pt;
+  }
+
+  .section__title {
+    font-size: 18pt;
+  }
+
+  /* Show URLs for links in print */
+  a[href]::after {
+    content: ' (' attr(href) ')';
+    font-size: 9pt;
+    color: #555 !important;
+    font-weight: normal;
+  }
+
+  /* Don't show URL for internal or empty links */
+  a[href^="#"]::after,
+  a[href^="javascript"]::after,
+  a[href=""]::after {
+    content: '';
+  }
+
+  /* Page breaks */
+  .section {
+    page-break-before: auto;
+  }
+
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+}
+
+/* ============================================================
+   PROPERTY DETAIL PAGE — Responsive Rules
+   ============================================================ */
+
+/* ── Base / Mobile (<480px) ─────────────────────────────────── */
+
+.property-detail__gallery {
+  aspect-ratio: 4 / 3;
+}
+
+.property-detail__info-grid {
+  grid-template-columns: 1fr;
+}
+
+.property-detail__contact-card {
+  position: static;
+}
+
+/* ── SM: 480px ──────────────────────────────────────────────── */
+
+@media (min-width: 480px) {
+  .property-detail__info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── MD: 640px ──────────────────────────────────────────────── */
+
+@media (min-width: 640px) {
+  .property-detail__gallery {
+    aspect-ratio: 16 / 9;
+  }
+
+  .property-detail__title {
+    font-size: var(--text-4xl);
+  }
+}
+
+/* ── LG: 768px — two-column layout ─────────────────────────── */
+
+@media (min-width: 768px) {
+  .property-detail__layout {
+    flex-direction: row;
+    align-items:    flex-start;
+    gap:            var(--space-10);
+  }
+
+  .property-detail__main {
+    flex:      1;
+    min-width: 0;
+  }
+
+  .property-detail__sidebar {
+    width:       340px;
+    flex-shrink: 0;
+  }
+
+  .property-detail__contact-card {
+    position: sticky;
+    top:      calc(var(--nav-height) + var(--space-6));
+  }
+
+  .property-detail__gallery-btn {
+    width:  52px;
+    height: 52px;
+  }
+}
+
+/* ── XL: 1024px ─────────────────────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .property-detail__title {
+    font-size: var(--text-4xl);
+  }
+
+  .property-detail__price {
+    font-size: var(--text-4xl);
+  }
+
+  .property-detail__sidebar {
+    width: 360px;
+  }
+
+  .property-detail__info-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .property-detail__content.section {
+    padding-block: var(--space-16);
+  }
+}
+
+/* ── 2XL: 1440px ────────────────────────────────────────────── */
+
+@media (min-width: 1440px) {
+  .property-detail__sidebar {
+    width: 400px;
+  }
+
+  .property-detail__gallery {
+    aspect-ratio: 21 / 9;
+  }
+}

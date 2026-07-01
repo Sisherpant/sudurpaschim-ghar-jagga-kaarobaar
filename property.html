@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--
+    <title> is overwritten by script.js once the property loads:
+    document.title = `${property.title} — Sudurpaschim Ghar Jagga Kaarobaar`
+  -->
+  <title>Property Details | Sudurpaschim Ghar Jagga Kaarobaar</title>
+
+  <meta name="description"  content="Property details — Sudurpaschim Ghar Jagga Kaarobaar. Verified real estate in Dhangadhi, Kailali, Nepal.">
+  <meta name="author"       content="Sudurpaschim Ghar Jagga Kaarobaar">
+  <meta name="theme-color"  content="#0A1628">
+
+  <meta name="description" content="Sudurpaschim Ghar Jagga Kaarobaar is a trusted real estate platform in Sudurpashchim, Nepal. Browse verified land and house listings, connect with buyers and sellers, and receive free property consultation.">
+  <meta property="og:type"   content="website">
+  <meta property="og:locale" content="ne_NP">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,600&family=Inter:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       SITE HEADER / NAVIGATION
+       Identical to index.html and listings.html.
+       JS handles sticky scroll, mobile menu.
+       No nav-link--active — the current page is
+       a property detail, not a top-level section.
+  ═══════════════════════════════════════════ -->
+  <header class="site-header" id="siteHeader" role="banner">
+    <nav class="nav-wrapper" aria-label="Main navigation">
+
+      <a href="index.html" class="nav-logo"
+         aria-label="Sudurpaschim Ghar Jagga Kaarobaar — go to homepage">
+        <img
+          src="images/logo/logo.jpg"
+          alt="Sudurpaschim Ghar Jagga Kaarobaar logo"
+          class="nav-logo__img"
+          width="48" height="48"
+          onerror="this.style.display='none'"
+        >
+        <div class="nav-logo__text">
+          <span class="nav-logo__primary">Sudurpaschim</span>
+          <span class="nav-logo__secondary">Ghar Jagga Kaarobaar</span>
+        </div>
+      </a>
+
+      <button
+        class="nav-toggle"
+        id="navToggle"
+        aria-label="Open navigation menu"
+        aria-controls="navMenu"
+        aria-expanded="false"
+      >
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu" role="list">
+        <li><a href="index.html"    class="nav-link">Home</a></li>
+        <li><a href="listings.html" class="nav-link">Listings</a></li>
+        <li><a href="featured.html" class="nav-link">Featured</a></li>
+        <li><a href="about.html"    class="nav-link">About</a></li>
+        <li><a href="contact.html"  class="nav-link">Contact</a></li>
+        <li>
+          <a href="tel:9848841529" class="nav-phone" aria-label="Call us at 9848841529">
+            <svg class="nav-phone__icon" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.4a16 16 0 0 0 6 6l.91-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 18v-.08z"/>
+            </svg>
+            <span>9848841529</span>
+          </a>
+        </li>
+      </ul>
+
+    </nav>
+  </header>
+
+
+  <main id="main-content">
+
+    <!-- ═══════════════════════════════════════════
+         BREADCRUMB
+         Always visible — sits outside #propertyDetail
+         so it persists even when the error state
+         replaces the detail content below.
+    ═══════════════════════════════════════════ -->
+    <div class="property-detail__breadcrumb-bar">
+      <nav
+        class="property-detail__breadcrumb"
+        aria-label="Breadcrumb navigation"
+      >
+        <ol class="property-detail__breadcrumb-list" role="list">
+          <li class="property-detail__breadcrumb-item">
+            <a href="index.html" class="property-detail__breadcrumb-link">Home</a>
+          </li>
+          <li class="property-detail__breadcrumb-item" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 class="property-detail__breadcrumb-sep" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </li>
+          <li class="property-detail__breadcrumb-item">
+            <a href="listings.html" class="property-detail__breadcrumb-link">Listings</a>
+          </li>
+          <li class="property-detail__breadcrumb-item" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 class="property-detail__breadcrumb-sep" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </li>
+          <li class="property-detail__breadcrumb-item property-detail__breadcrumb-item--current"
+              aria-current="page">
+            Property Details
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════
+         PROPERTY DETAIL WRAPPER
+         ─────────────────────────────────────────
+         id="propertyDetail" is the ERROR TARGET.
+         If script.js cannot find the property
+         (bad ?id= param, API error, not found),
+         Renderer.error('propertyDetail', msg)
+         replaces ALL innerHTML with the error state.
+
+         If the property IS found, JS leaves the
+         structure intact and populates individual
+         elements by ID.
+    ═══════════════════════════════════════════ -->
+    <div id="propertyDetail" aria-live="polite">
+
+
+      <!-- ═════════════════════════════════════════
+           GALLERY SECTION
+           ─────────────────────────────────────────
+           id="propertyGallery"
+             script.js replaces this element's
+             innerHTML entirely with:
+               .gallery__slide (×N)  — one per image
+               .gallery__slide--active — first/active
+             _initGallery() then queries .gallery__prev
+             and .gallery__next INSIDE this element.
+
+           Because innerHTML is replaced, the nav
+           buttons below are placed OUTSIDE the gallery
+           div inside a shared wrapper. A future script.js
+           update or CSS-only approach handles them.
+
+           The gallery container is keyboard-navigable
+           via tabindex="0" — arrow-key listeners are
+           attached by _initGallery() on the element.
+      ═════════════════════════════════════════ -->
+      <section
+        class="property-detail__gallery-section"
+        aria-label="Property image gallery"
+      >
+        <div class="property-detail__gallery-wrap">
+
+          <!--
+            id="propertyGallery" — JS replaces innerHTML here.
+            Initial content: skeleton card (visible while loading).
+            After load: .gallery__slide divs replace the skeleton.
+          -->
+          <div
+            id="propertyGallery"
+            class="property-detail__gallery"
+            role="region"
+            aria-label="Property photos. Use arrow keys to navigate between images."
+            tabindex="0"
+          >
+            <!-- Skeleton shown while API fetches the property -->
+            <div class="property-detail__gallery-placeholder" aria-hidden="true">
+              <div class="skeleton-card property-detail__gallery-skeleton"></div>
+            </div>
+          </div>
+
+          <!--
+            Gallery navigation buttons.
+            ───────────────────────────────────────────────
+            These sit OUTSIDE #propertyGallery so they
+            survive when JS replaces the gallery innerHTML.
+            _initGallery() queries .gallery__prev and
+            .gallery__next INSIDE galleryEl — meaning
+            these won't be auto-wired by the current JS.
+
+            Keyboard navigation (ArrowLeft / ArrowRight)
+            on #propertyGallery DOES work (wired by JS).
+            Click navigation can be added in a future
+            script.js enhancement.
+          -->
+          <button
+            class="gallery__prev property-detail__gallery-btn"
+            type="button"
+            aria-label="Previous image"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2.5"
+                 aria-hidden="true">
+              <line x1="19" y1="12" x2="5" y2="12"/>
+              <polyline points="12 19 5 12 12 5"/>
+            </svg>
+          </button>
+
+          <button
+            class="gallery__next property-detail__gallery-btn"
+            type="button"
+            aria-label="Next image"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2.5"
+                 aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+
+        </div>
+      </section>
+
+
+      <!-- ═════════════════════════════════════════
+           PROPERTY INFORMATION SECTION
+           Two-column layout on desktop:
+             Left  (.property-detail__main)
+               — title, badges, meta, description
+             Right (.property-detail__sidebar)
+               — contact card with action buttons
+      ═════════════════════════════════════════ -->
+      <section
+        class="section section--white property-detail__content"
+        aria-label="Property information"
+      >
+        <div class="section__inner">
+          <div class="property-detail__layout">
+
+
+            <!-- ── MAIN CONTENT COLUMN ──────────────── -->
+            <div class="property-detail__main">
+
+
+              <!-- ── Badges row ── -->
+              <div class="property-detail__badges" role="group" aria-label="Property status">
+
+                <!--
+                  id="propertyStatusBadge"
+                  JS sets: element.className =
+                    'property-detail__status property-card__status--{available|sold|reserved}'
+                  JS sets: element.textContent = property.status
+                  The property-card__status--* modifier provides the colour.
+                  property-detail__status provides the base pill styling (needs CSS).
+                -->
+                <span
+                  id="propertyStatusBadge"
+                  class="property-detail__status"
+                  role="status"
+                  aria-label="Availability status"
+                >—</span>
+
+                <!--
+                  id="propertyFeaturedBadge"
+                  Starts hidden. JS removes [hidden] when featured === 'TRUE'.
+                  Uses property-card__featured-badge for the gold star circle.
+                -->
+                <span
+                  id="propertyFeaturedBadge"
+                  class="property-detail__featured-badge"
+                  aria-label="Featured property"
+                  hidden
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                       fill="currentColor" aria-hidden="true">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                  Featured
+                </span>
+
+              </div><!-- /.property-detail__badges -->
+
+
+              <!-- ── Property type ── -->
+              <!--
+                id="propertyType"
+                JS sets: textContent = property.type
+                (e.g. "House", "Land", "Commercial")
+                Reuses .property-card__type for the
+                gold uppercase eyebrow styling.
+              -->
+              <span
+                id="propertyType"
+                class="property-card__type property-detail__type"
+                aria-label="Property type"
+              >—</span>
+
+
+              <!-- ── Title ── -->
+              <!--
+                id="propertyTitle"
+                JS sets: textContent = property.title
+              -->
+              <h1
+                id="propertyTitle"
+                class="property-detail__title"
+              >Loading property…</h1>
+
+
+              <!-- ── Price ── -->
+              <!--
+                id="propertyPrice"
+                JS sets: textContent = Formatters.price(property.price)
+              -->
+              <div class="property-detail__price-wrap">
+                <strong
+                  id="propertyPrice"
+                  class="property-detail__price"
+                  aria-label="Asking price"
+                >—</strong>
+                <span class="property-detail__price-label">Asking Price</span>
+              </div>
+
+
+              <!-- ── Location ── -->
+              <!--
+                id="propertyLocation"
+                JS sets: textContent = property.location
+              -->
+              <p class="property-detail__location">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2"
+                     class="property-detail__location-icon" aria-hidden="true">
+                  <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <span id="propertyLocation">—</span>
+              </p>
+
+
+              <!-- ── Divider ── -->
+              <hr class="property-detail__divider" aria-hidden="true">
+
+
+              <!-- ── Property information grid ────────────
+                   A definition list of key property facts.
+                   Each <div> is a dt (label) + dd (value) pair.
+                   All dd elements are populated by JS.
+              ──────────────────────────────────────────── -->
+              <dl class="property-detail__info-grid" aria-label="Property details">
+
+                <div class="property-detail__info-item">
+                  <dt class="property-detail__info-label">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         aria-hidden="true">
+                      <path d="M2 20L20 2"/><path d="M8.5 14.5l1.5-1.5M11.5 11.5l1.5-1.5M5.5 17.5l1.5-1.5"/>
+                    </svg>
+                    Area
+                  </dt>
+                  <!--
+                    id="propertyArea"
+                    JS sets: textContent = property.area
+                  -->
+                  <dd id="propertyArea" class="property-detail__info-value">—</dd>
+                </div>
+
+                <div class="property-detail__info-item">
+                  <dt class="property-detail__info-label">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         aria-hidden="true">
+                      <path d="M12 22V12"/><path d="M5 12H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h3a1 1 0 0 1 .8.4L9 8h6l2.2-2.6A1 1 0 0 1 18 5h3a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-2"/>
+                    </svg>
+                    Road Access
+                  </dt>
+                  <!--
+                    id="propertyRoad"
+                    JS sets: textContent = property.roadAccess
+                  -->
+                  <dd id="propertyRoad" class="property-detail__info-value">—</dd>
+                </div>
+
+                <div class="property-detail__info-item">
+                  <dt class="property-detail__info-label">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         aria-hidden="true">
+                      <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    District
+                  </dt>
+                  <!--
+                    id="propertyDistrict"
+                    JS sets: textContent = property.district
+                  -->
+                  <dd id="propertyDistrict" class="property-detail__info-value">—</dd>
+                </div>
+
+                <div class="property-detail__info-item">
+                  <dt class="property-detail__info-label">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         aria-hidden="true">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                    </svg>
+                    Property Code
+                  </dt>
+                  <!--
+                    id="propertyCode"
+                    JS sets: textContent = property.propertyCode
+                  -->
+                  <dd id="propertyCode" class="property-detail__info-value">—</dd>
+                </div>
+
+                <div class="property-detail__info-item">
+                  <dt class="property-detail__info-label">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         aria-hidden="true">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                      <line x1="16" y1="2" x2="16" y2="6"/>
+                      <line x1="8" y1="2" x2="8" y2="6"/>
+                      <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    Listed Date
+                  </dt>
+                  <!--
+                    id="propertyDate"
+                    JS sets: textContent = Formatters.date(property.postedDate)
+                  -->
+                  <dd id="propertyDate" class="property-detail__info-value">—</dd>
+                </div>
+
+              </dl><!-- /.property-detail__info-grid -->
+
+
+              <!-- ── Divider ── -->
+              <hr class="property-detail__divider" aria-hidden="true">
+
+
+              <!-- ── Description ── -->
+              <div class="property-detail__section">
+                <h2 class="property-detail__section-title">Description</h2>
+                <!--
+                  id="propertyDescription"
+                  JS sets: textContent = property.description
+                -->
+                <p
+                  id="propertyDescription"
+                  class="property-detail__section-body"
+                >—</p>
+              </div>
+
+
+              <!-- ── Remarks ──
+                   Empty by default; JS populates if property.remarks exists.
+                   The section remains in the DOM regardless —
+                   an empty <p> is invisible when propertyRemarks = ''.
+              ── -->
+              <div class="property-detail__section property-detail__section--remarks">
+                <h2 class="property-detail__section-title">Additional Remarks</h2>
+                <!--
+                  id="propertyRemarks"
+                  JS sets: textContent = property.remarks  (may be empty)
+                -->
+                <p
+                  id="propertyRemarks"
+                  class="property-detail__section-body"
+                ></p>
+              </div>
+
+
+            </div><!-- /.property-detail__main -->
+
+
+            <!-- ── SIDEBAR — CONTACT CARD ───────────── -->
+            <aside
+              class="property-detail__sidebar"
+              aria-label="Contact and quick actions"
+            >
+              <div class="property-detail__contact-card">
+
+                <h2 class="property-detail__contact-title">Contact Seller</h2>
+                <p class="property-detail__contact-sub">
+                  Reach the seller directly — no middlemen, no fees.
+                </p>
+
+                <!-- ── Phone ──
+                     id="propertyPhone"
+                     JS sets: href = tel:{phone}
+                     JS sets: textContent = property.phone  ← replaces inner content
+                     JS sets: hidden = false  (if phone exists)
+                     Starts hidden. JS reveals only when phone is present.
+                     Note: JS sets textContent, which replaces the SVG icon.
+                     Icon placed in a sibling label element instead.
+                -->
+                <div class="property-detail__action-group">
+                  <span class="property-detail__action-label" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         aria-hidden="true">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.4a16 16 0 0 0 6 6l.91-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 18v-.08z"/>
+                    </svg>
+                    Phone
+                  </span>
+                  <a
+                    id="propertyPhone"
+                    class="btn btn--primary btn--large property-detail__phone-btn"
+                    href="tel:9848841529"
+                    aria-label="Call seller"
+                    hidden
+                  >9848841529</a>
+                </div>
+
+                <!-- ── Google Maps ──
+                     id="propertyMapBtn"
+                     JS sets: href = property.mapLink
+                     JS sets: hidden = false  (if mapLink exists)
+                     Starts hidden.
+                     textContent is NOT changed by JS — icon + label safe.
+                -->
+                <a
+                  id="propertyMapBtn"
+                  class="btn btn--outline btn--large property-detail__map-btn"
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="View property location on Google Maps (opens in new tab)"
+                  hidden
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2"
+                       aria-hidden="true">
+                    <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
+                    <line x1="8" y1="2" x2="8" y2="18"/>
+                    <line x1="16" y1="6" x2="16" y2="22"/>
+                  </svg>
+                  View on Map
+                </a>
+
+                <!-- ── Facebook post ──
+                     id="propertyFbBtn"
+                     JS sets: href = property.facebookPost
+                     JS sets: hidden = false  (if facebookPost exists)
+                     Starts hidden.
+                     textContent is NOT changed by JS — icon + label safe.
+                -->
+                <a
+                  id="propertyFbBtn"
+                  class="btn btn--ghost btn--large property-detail__fb-btn"
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="View original Facebook post (opens in new tab)"
+                  hidden
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                       fill="currentColor" aria-hidden="true">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                  </svg>
+                  View Original Post
+                </a>
+
+                <!-- ── Fallback call-us line (always visible) ──
+                     Shown as a secondary option below the action buttons.
+                     Uses the site-wide phone number.
+                -->
+                <div class="property-detail__contact-fallback">
+                  <p class="property-detail__contact-fallback-text">
+                    Or call us directly:
+                  </p>
+                  <a
+                    href="tel:9848841529"
+                    class="property-detail__contact-fallback-phone"
+                    aria-label="Call 9848841529"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         aria-hidden="true">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.4a16 16 0 0 0 6 6l.91-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 18v-.08z"/>
+                    </svg>
+                    9848841529
+                  </a>
+                </div>
+
+                <!-- ── Share / social links ── -->
+                <div class="property-detail__share">
+                  <span class="property-detail__share-label">Share on:</span>
+                  <div class="property-detail__share-links">
+                    <a
+                      href="https://www.facebook.com/profile.php?id=100064083400124"
+                      class="footer-social-link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Share on Facebook"
+                    >
+                      <svg viewBox="0 0 24 24" fill="currentColor"
+                           xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                      </svg>
+                    </a>
+                    <a
+                      href="https://www.instagram.com/sudurpaschimgharjagga/"
+                      class="footer-social-link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Share on Instagram"
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                           stroke-width="2" xmlns="http://www.w3.org/2000/svg"
+                           aria-hidden="true">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+
+              </div><!-- /.property-detail__contact-card -->
+            </aside><!-- /.property-detail__sidebar -->
+
+
+          </div><!-- /.property-detail__layout -->
+        </div><!-- /.section__inner -->
+      </section><!-- property-detail__content -->
+
+
+    </div><!-- /#propertyDetail -->
+
+
+    <!-- ═══════════════════════════════════════════
+         RELATED PROPERTIES SECTION
+         ─────────────────────────────────────────
+         id="relatedGrid"
+           script.js → Renderer.grid('relatedGrid', related)
+           where `related` = same type, excluding current,
+           sorted newest-first, max 3 items.
+
+         Sits OUTSIDE #propertyDetail so it always
+         renders even when #propertyDetail shows an
+         error (the related grid would be empty on
+         error but the section still renders cleanly).
+    ═══════════════════════════════════════════ -->
+    <section
+      class="section section--light"
+      id="relatedSection"
+      aria-labelledby="relatedHeading"
+    >
+      <div class="section__inner">
+
+        <header class="section__header">
+          <div class="section__eyebrow">Similar</div>
+          <h2 class="section__title" id="relatedHeading">Related Properties</h2>
+          <p class="section__subtitle">
+            More properties of the same type in Kailali and Dhangadhi.
+          </p>
+          <a href="listings.html" class="section__link" aria-label="Browse all listings">
+            Browse all listings
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        </header>
+
+        <!--
+          id="relatedGrid"
+          script.js → Renderer.grid('relatedGrid', related)
+          aria-busy="true" → set to "false" by Renderer after cards inject.
+          Three skeleton cards = fills a 3-column row while loading.
+        -->
+        <div
+          class="properties-grid"
+          id="relatedGrid"
+          role="list"
+          aria-label="Related property listings"
+          aria-live="polite"
+          aria-busy="true"
+        >
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+        </div>
+
+        <div class="section__footer">
+          <a href="listings.html" class="btn btn--outline">
+            View All Listings
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         CALL-TO-ACTION STRIP
+         Reuses .cta-strip from index.html and
+         listings.html — zero new CSS needed.
+    ═══════════════════════════════════════════ -->
+    <section class="cta-strip" aria-labelledby="propertyCtaTitle">
+      <div class="cta-strip__inner">
+
+        <div class="cta-strip__content">
+          <h2 class="cta-strip__title" id="propertyCtaTitle">
+            Interested in this<br>
+            <em>property?</em>
+          </h2>
+          <p class="cta-strip__text">
+            Contact us directly or browse more listings across Dhangadhi
+            and Kailali district.
+          </p>
+        </div>
+
+        <div class="cta-strip__actions">
+          <a href="listings.html"  class="btn btn--gold btn--large">Browse More</a>
+          <a href="contact.html"   class="btn btn--ghost-light btn--large">Contact Us</a>
+
+          <div class="cta-strip__contact">
+            <a href="tel:9848841529" class="cta-strip__phone" aria-label="Call 9848841529">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.4a16 16 0 0 0 6 6l.91-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 18v-.08z"/>
+              </svg>
+              9848841529
+            </a>
+            <div class="cta-strip__socials">
+              <a href="https://www.facebook.com/profile.php?id=100064083400124"
+                 class="cta-strip__social-link"
+                 target="_blank" rel="noopener noreferrer"
+                 aria-label="Facebook page">Facebook</a>
+              <a href="https://www.instagram.com/sudurpaschimgharjagga/"
+                 class="cta-strip__social-link"
+                 target="_blank" rel="noopener noreferrer"
+                 aria-label="Instagram page">Instagram</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main><!-- /main -->
+
+
+  <!-- ═══════════════════════════════════════════
+       SITE FOOTER
+       Identical to index.html and listings.html.
+       id="footerYear" populated by UI.setFooterYear().
+  ═══════════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+
+      <div class="site-footer__top">
+
+        <div class="footer-brand">
+          <a href="index.html" class="footer-brand__logo" aria-label="Homepage">
+            <img
+              src="images/logo/logo.jpg"
+              alt="Sudurpaschim Ghar Jagga Kaarobaar"
+              class="footer-brand__img"
+              width="56" height="56"
+              onerror="this.style.display='none'"
+            >
+          </a>
+          <p class="footer-brand__name">Sudurpaschim<br>Ghar Jagga Kaarobaar</p>
+          <p class="footer-brand__devanagari" lang="ne">सुदूरपश्चिम घर जग्गा कारोबार</p>
+          <p class="footer-brand__location">📍 Dhangadhi, Kailali, Nepal</p>
+          <div class="footer-brand__socials">
+            <a href="https://www.facebook.com/profile.php?id=100064083400124"
+               class="footer-social-link" target="_blank" rel="noopener noreferrer"
+               aria-label="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor"
+                   xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            </a>
+            <a href="https://www.instagram.com/sudurpaschimgharjagga/"
+               class="footer-social-link" target="_blank" rel="noopener noreferrer"
+               aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <nav class="footer-nav" aria-label="Footer navigation">
+
+          <div class="footer-nav__group">
+            <h3 class="footer-nav__heading">Pages</h3>
+            <ul class="footer-nav__list" role="list">
+              <li><a href="index.html"    class="footer-nav__link">Home</a></li>
+              <li><a href="listings.html" class="footer-nav__link">All Listings</a></li>
+              <li><a href="featured.html" class="footer-nav__link">Featured</a></li>
+              <li><a href="about.html"    class="footer-nav__link">About Us</a></li>
+              <li><a href="contact.html"  class="footer-nav__link">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-nav__group">
+            <h3 class="footer-nav__heading">Property Types</h3>
+            <ul class="footer-nav__list" role="list">
+              <li><a href="listings.html?type=house"      class="footer-nav__link">Houses</a></li>
+              <li><a href="listings.html?type=land"       class="footer-nav__link">Land</a></li>
+              <li><a href="listings.html?type=commercial" class="footer-nav__link">Commercial</a></li>
+              <li><a href="listings.html?type=apartment"  class="footer-nav__link">Apartments</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-nav__group">
+            <h3 class="footer-nav__heading">Contact</h3>
+            <ul class="footer-nav__list" role="list">
+              <li>
+                <a href="tel:9848841529"
+                   class="footer-nav__link footer-nav__link--phone"
+                   aria-label="Call 9848841529">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2"
+                       aria-hidden="true">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.4a16 16 0 0 0 6 6l.91-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 18v-.08z"/>
+                  </svg>
+                  9848841529
+                </a>
+              </li>
+              <li>
+                <a href="https://www.facebook.com/profile.php?id=100064083400124"
+                   class="footer-nav__link" target="_blank" rel="noopener noreferrer">
+                  Facebook Page
+                </a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/sudurpaschimgharjagga/"
+                   class="footer-nav__link" target="_blank" rel="noopener noreferrer">
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a href="contact.html" class="footer-nav__link">Send a Message</a>
+              </li>
+            </ul>
+          </div>
+
+        </nav>
+
+      </div><!-- /site-footer__top -->
+
+      <div class="site-footer__bottom">
+        <p class="site-footer__copy">
+          &copy; <span id="footerYear">2025</span>
+          Sudurpaschim Ghar Jagga Kaarobaar. All rights reserved.
+        </p>
+        <p class="site-footer__note">
+          Dhangadhi, Kailali, Nepal &nbsp;·&nbsp; Real Estate Listings Platform
+        </p>
+      </div>
+
+    </div><!-- /site-footer__inner -->
+  </footer>
+
+
+  <!--
+    script.js loaded at end of body (non-blocking).
+
+    On property.html it runs:
+      detectPage()       → returns 'property'
+      API.fetchAll()     → fetches Google Sheets data
+      Pages.property(data) →
+        1. Reads ?id= from URL (Helpers.getParam)
+        2. Finds matching property in data array
+        3. document.title = property.title + site name
+        4. DOM.setText() on all 12 text-field IDs
+        5. Toggles #propertyFeaturedBadge visibility
+        6. Sets className + textContent on #propertyStatusBadge
+        7. Replaces #propertyGallery innerHTML with slides
+        8. _initGallery() wires arrow-key keyboard nav
+        9. Sets href/hidden on #propertyPhone
+       10. Sets href/hidden on #propertyMapBtn
+       11. Sets href/hidden on #propertyFbBtn
+       12. Renderer.grid('relatedGrid', sameTypeProperties)
+      UI.initRevealClasses() + UI.initScrollReveal()
+  -->
+  <script src="js/script.js"></script>
+
+</body>
+</html>

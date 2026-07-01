@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>All Listings | Sudurpaschim Ghar Jagga Kaarobaar | सुदूरपश्चिम घर जग्गा कारोबार</title>
+
+  <meta name="description"    content="Browse all property listings in Dhangadhi, Kailali, Nepal. Houses, land, commercial spaces and apartments — verified and ready to view.">
+  <meta name="keywords"       content="property listings Nepal, ghar jagga Kailali, Dhangadhi real estate, घर जग्गा सूची, land for sale Nepal, house Kailali">
+  <meta name="author"         content="Sudurpaschim Ghar Jagga Kaarobaar">
+  <meta name="theme-color"    content="#0A1628">
+
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="All Listings — Sudurpaschim Ghar Jagga Kaarobaar">
+  <meta property="og:description" content="Browse verified property listings across Dhangadhi and Kailali, Nepal.">
+  <meta property="og:locale"      content="ne_NP">
+
+  <meta name="description" content="Sudurpaschim Ghar Jagga Kaarobaar is a trusted real estate platform in Sudurpashchim, Nepal. Browse verified land and house listings, connect with buyers and sellers, and receive free property consultation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,600&family=Inter:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       SITE HEADER / NAVIGATION
+       Identical to index.html.
+       JS (script.js) handles sticky scroll,
+       mobile menu toggle, and page transitions.
+       "Listings" carries nav-link--active here.
+  ═══════════════════════════════════════════ -->
+  <header class="site-header" id="siteHeader" role="banner">
+    <nav class="nav-wrapper" aria-label="Main navigation">
+
+      <a href="index.html" class="nav-logo"
+         aria-label="Sudurpaschim Ghar Jagga Kaarobaar — go to homepage">
+        <img
+          src="images/logo/logo.jpg"
+          alt="Sudurpaschim Ghar Jagga Kaarobaar logo"
+          class="nav-logo__img"
+          width="48" height="48"
+          onerror="this.style.display='none'"
+        >
+        <div class="nav-logo__text">
+          <span class="nav-logo__primary">Sudurpaschim</span>
+          <span class="nav-logo__secondary">Ghar Jagga Kaarobaar</span>
+        </div>
+      </a>
+
+      <button
+        class="nav-toggle"
+        id="navToggle"
+        aria-label="Open navigation menu"
+        aria-controls="navMenu"
+        aria-expanded="false"
+      >
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu" role="list">
+        <li><a href="index.html"    class="nav-link">Home</a></li>
+        <li><a href="listings.html" class="nav-link nav-link--active" aria-current="page">Listings</a></li>
+        <li><a href="featured.html" class="nav-link">Featured</a></li>
+        <li><a href="about.html"    class="nav-link">About</a></li>
+        <li><a href="contact.html"  class="nav-link">Contact</a></li>
+        <li>
+          <a href="tel:9848841529" class="nav-phone" aria-label="Call us at 9848841529">
+            <svg class="nav-phone__icon" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.4a16 16 0 0 0 6 6l.91-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 18v-.08z"/>
+            </svg>
+            <span>9848841529</span>
+          </a>
+        </li>
+      </ul>
+
+    </nav>
+  </header>
+
+
+  <main id="main-content">
+
+    <!-- ═══════════════════════════════════════════
+         PAGE BANNER
+         ─────────────────────────────────────────
+         .hero          — provides padding-top that
+                          clears the fixed nav header
+         .section--dark — overrides hero's white bg
+                          to deep navy (comes later
+                          in style.css, so it wins)
+         .hero__inner   — position:relative z-index:1
+                          keeps content above the
+                          decorative ::before gradient
+         .section__inner — single flex child; its
+                          margin-inline:auto centres
+                          it inside the flex row on
+                          desktop (flexbox auto-margin)
+    ═══════════════════════════════════════════ -->
+    <section
+      class="hero section--dark"
+      id="listingsBanner"
+      aria-labelledby="listingsPageTitle"
+    >
+      <div class="hero__inner">
+        <div class="section__inner">
+
+          <!-- Page identity -->
+          <header class="section__header section__header--centered">
+            <div class="section__eyebrow section__eyebrow--light">
+              Browse Properties
+            </div>
+            <h1 class="section__title section__title--light" id="listingsPageTitle">
+              All Listings
+            </h1>
+            <p class="section__subtitle section__subtitle--light">
+              Verified properties across Dhangadhi and Kailali district —
+              houses, land, and commercial spaces with direct seller contact.
+            </p>
+          </header>
+
+
+          <!-- ── Search bar ──────────────────────────────
+               id="listingsSearch"
+                 → script.js attaches a live 'input' listener
+                   that instant-filters already-loaded results
+                   without reloading the page.
+               name="q"
+                 → form GET submits ?q=term for URL-shareable
+                   search; script.js reads this param on load.
+               Both mechanisms use the same Filters.search().
+          ──────────────────────────────────────────── -->
+          <form
+            class="listings-search"
+            role="search"
+            method="GET"
+            action="listings.html"
+            aria-label="Search all properties"
+            id="listingsSearchForm"
+          >
+            <label for="listingsSearch" class="sr-only">
+              Search properties by title, location, or description
+            </label>
+
+            <div class="listings-search__field">
+              <svg class="listings-search__icon"
+                   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+              <input
+                type="search"
+                id="listingsSearch"
+                name="q"
+                placeholder="Search by title, location, or description…"
+                class="listings-search__input"
+                autocomplete="off"
+                spellcheck="false"
+              >
+            </div>
+
+            <button type="submit" class="btn btn--gold btn--large">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2.5"
+                   width="16" height="16" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+              Search
+            </button>
+          </form>
+
+
+          <!-- ── Quick type-filter pills ──────────────────
+               .hero__actions — existing CSS:
+                 display: flex; flex-wrap: wrap;
+                 gap: var(--space-3); align-items: center
+               This gives the pills proper horizontal
+               layout with wrapping on small screens.
+
+               Each pill is a direct URL link:
+               clicking navigates to listings.html?type=xxx
+               and script.js reads ?type= on the next load.
+               JS can enhance active-pill state later.
+          ──────────────────────────────────────────── -->
+          <nav class="hero__actions" aria-label="Quick filter by property type">
+
+            <a href="listings.html"
+               class="btn btn--ghost-light"
+               aria-label="Show all property types">
+              All Types
+            </a>
+
+            <a href="listings.html?type=house"
+               class="btn btn--ghost-light"
+               aria-label="Show houses only">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   width="15" height="15" aria-hidden="true">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+              Houses
+            </a>
+
+            <a href="listings.html?type=land"
+               class="btn btn--ghost-light"
+               aria-label="Show land only">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   width="15" height="15" aria-hidden="true">
+                <path d="M3 17l4-8 4 4 4-6 4 10"/>
+                <line x1="3" y1="21" x2="21" y2="21"/>
+              </svg>
+              Land
+            </a>
+
+            <a href="listings.html?type=commercial"
+               class="btn btn--ghost-light"
+               aria-label="Show commercial properties only">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   width="15" height="15" aria-hidden="true">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+              </svg>
+              Commercial
+            </a>
+
+            <a href="listings.html?type=apartment"
+               class="btn btn--ghost-light"
+               aria-label="Show apartments only">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   width="15" height="15" aria-hidden="true">
+                <rect x="3" y="2" width="18" height="20" rx="1"/>
+                <line x1="9" y1="22" x2="9" y2="12"/>
+                <line x1="15" y1="22" x2="15" y2="12"/>
+                <path d="M7 7h.01M12 7h.01M17 7h.01M7 12h.01M17 12h.01"/>
+              </svg>
+              Apartments
+            </a>
+
+            <a href="listings.html?type=flat"
+               class="btn btn--ghost-light"
+               aria-label="Show flats only">
+              Flats
+            </a>
+
+            <a href="listings.html?type=plot"
+               class="btn btn--ghost-light"
+               aria-label="Show plots only">
+              Plots
+            </a>
+
+          </nav>
+
+        </div><!-- /section__inner -->
+      </div><!-- /hero__inner -->
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         LIVE STATS BAR
+         ─────────────────────────────────────────
+         Reuses the .stats-bar component from
+         index.html (deep navy, styled icons, white
+         numbers). id="listingsTotal" is populated
+         by script.js → Pages.listings() with the
+         total property count from the API.
+         Other cells display static contextual info.
+    ═══════════════════════════════════════════ -->
+    <div class="stats-bar"
+         role="status"
+         aria-live="polite"
+         aria-label="Property database overview">
+      <div class="stats-bar__inner">
+
+        <div class="stats-bar__item">
+          <div class="stats-bar__icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <div class="stats-bar__text">
+            <!-- script.js → DOM.setText('listingsTotal', data.length) -->
+            <strong id="listingsTotal">—</strong>
+            <span>Total Listings</span>
+          </div>
+        </div>
+
+        <div class="stats-bar__divider" aria-hidden="true"></div>
+
+        <div class="stats-bar__item">
+          <div class="stats-bar__icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <div class="stats-bar__text">
+            <strong>Verified</strong>
+            <span>All Listings</span>
+          </div>
+        </div>
+
+        <div class="stats-bar__divider" aria-hidden="true"></div>
+
+        <div class="stats-bar__item">
+          <div class="stats-bar__icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div class="stats-bar__text">
+            <strong>Kailali</strong>
+            <span>District</span>
+          </div>
+        </div>
+
+        <div class="stats-bar__divider" aria-hidden="true"></div>
+
+        <div class="stats-bar__item">
+          <div class="stats-bar__icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8"  y1="2" x2="8"  y2="6"/>
+              <line x1="3"  y1="10" x2="21" y2="10"/>
+            </svg>
+          </div>
+          <div class="stats-bar__text">
+            <strong>Daily</strong>
+            <span>New Listings</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════
+         LISTINGS MAIN SECTION
+         ─────────────────────────────────────────
+         .section.section--light — off-white bg,
+           spacious vertical padding
+         .section__inner         — max-width 1200px,
+           centred, flex-column with gap
+    ═══════════════════════════════════════════ -->
+    <section
+      class="section section--light"
+      id="listingsMain"
+      aria-labelledby="listingsResultsHeading"
+    >
+      <div class="section__inner">
+
+
+        <!-- ── Advanced filter form ────────────────────
+             method="GET" action="listings.html"
+               Submitting builds a shareable URL:
+               listings.html?type=house&status=Available&district=Kailali
+             script.js reads: ?type= ?status= ?district=
+               via Helpers.getParam() on every page load.
+             id="listingsFilterForm"
+               Reserved hook for future JS enhancement
+               (e.g. auto-submit on select change, active
+               state highlighting, combine with search).
+        ──────────────────────────────────────────── -->
+        <div class="listings-filters" role="search" aria-label="Filter properties">
+
+          <header class="section__header">
+            <div class="section__eyebrow">Filter</div>
+            <h2 class="section__title" id="listingsResultsHeading">
+              Find Your Property
+            </h2>
+            <p class="section__subtitle">
+              Use the filters below or search above to narrow down your results.
+            </p>
+          </header>
+
+          <form
+            method="GET"
+            action="listings.html"
+            class="listings-filters__form"
+            id="listingsFilterForm"
+            aria-label="Advanced property filters"
+          >
+            <fieldset class="listings-filters__fieldset">
+              <legend class="sr-only">Filter properties by type, status, and district</legend>
+
+              <!-- Property type -->
+              <div class="listings-filters__group">
+                <label for="filterType" class="listings-filters__label">
+                  Property Type
+                </label>
+                <div class="listings-filters__select-wrap">
+                  <select name="type" id="filterType"
+                          class="listings-filters__select"
+                          aria-label="Filter by property type">
+                    <option value="">All Types</option>
+                    <option value="house">House</option>
+                    <option value="land">Land</option>
+                    <option value="commercial">Commercial</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="flat">Flat</option>
+                    <option value="plot">Plot</option>
+                    <option value="villa">Villa</option>
+                    <option value="shop">Shop</option>
+                  </select>
+                  <svg class="listings-filters__chevron"
+                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Availability status -->
+              <div class="listings-filters__group">
+                <label for="filterStatus" class="listings-filters__label">
+                  Status
+                </label>
+                <div class="listings-filters__select-wrap">
+                  <select name="status" id="filterStatus"
+                          class="listings-filters__select"
+                          aria-label="Filter by availability status">
+                    <option value="">All Status</option>
+                    <option value="Available">Available</option>
+                    <option value="Reserved">Reserved</option>
+                    <option value="Sold">Sold</option>
+                  </select>
+                  <svg class="listings-filters__chevron"
+                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- District -->
+              <div class="listings-filters__group">
+                <label for="filterDistrict" class="listings-filters__label">
+                  District
+                </label>
+                <div class="listings-filters__select-wrap">
+                  <select name="district" id="filterDistrict"
+                          class="listings-filters__select"
+                          aria-label="Filter by district">
+                    <option value="">All Districts</option>
+                    <option value="Kailali">Kailali</option>
+                    <option value="Kanchanpur">Kanchanpur</option>
+                    <option value="Dadeldhura">Dadeldhura</option>
+                    <option value="Baitadi">Baitadi</option>
+                    <option value="Doti">Doti</option>
+                    <option value="Bajhang">Bajhang</option>
+                    <option value="Bajura">Bajura</option>
+                    <option value="Achham">Achham</option>
+                  </select>
+                  <svg class="listings-filters__chevron"
+                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </div>
+              </div>
+
+            </fieldset>
+
+            <!-- Filter action buttons
+                 .hero__actions reuses: display:flex; flex-wrap:wrap;
+                 gap:var(--space-3); align-items:center
+                 → buttons sit side-by-side and wrap on mobile  -->
+            <div class="hero__actions listings-filters__actions">
+              <button type="submit" class="btn btn--primary">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2"
+                     width="15" height="15" aria-hidden="true">
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                </svg>
+                Apply Filters
+              </button>
+              <a href="listings.html"
+                 class="btn btn--outline"
+                 aria-label="Clear all filters and show all properties">
+                Clear All
+              </a>
+            </div>
+
+          </form>
+        </div><!-- /.listings-filters -->
+
+
+        <!-- ── Results toolbar ─────────────────────────
+             Sits between the filter form and the grid.
+             id="listingsCount"
+               script.js sets this to "X properties found"
+               (a full phrase, not a bare number).
+               role="status" + aria-live="polite" announces
+               filter changes to screen-reader users.
+             id="listingsSort"
+               Placeholder for future sort-by-JS feature.
+               script.js doesn't wire this yet; it always
+               sorts newest-first via Filters.sortByNewest().
+        ──────────────────────────────────────────── -->
+        <div class="listings-toolbar"
+             role="toolbar"
+             aria-label="Results count and sort controls">
+
+          <div class="listings-toolbar__count">
+            <p
+              id="listingsCount"
+              class="listings-toolbar__count-text"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              Loading listings…
+            </p>
+          </div>
+
+          <div class="listings-toolbar__sort">
+            <label for="listingsSort" class="sr-only">Sort properties by</label>
+            <div class="listings-filters__select-wrap">
+              <select
+                id="listingsSort"
+                class="listings-filters__select listings-toolbar__sort-select"
+                aria-label="Sort property listings"
+              >
+                <option value="newest">Newest First</option>
+                <option value="price-asc">Price: Low → High</option>
+                <option value="price-desc">Price: High → Low</option>
+                <option value="area">Largest Area First</option>
+              </select>
+              <svg class="listings-filters__chevron"
+                   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </div>
+          </div>
+
+        </div><!-- /.listings-toolbar -->
+
+
+        <!-- ══════════════════════════════════════════
+             PROPERTY GRID
+             ──────────────────────────────────────────
+             id="listingsGrid"  ← sole target for
+               script.js → Renderer.grid('listingsGrid', …)
+             aria-busy="true"   ← tells screen readers
+               the region is loading; set to "false"
+               by script.js after cards are injected
+             aria-live="polite" ← announces updates
+
+             DO NOT add real property cards here.
+             All data is loaded from the Google Sheets
+             API. Skeleton loaders are replaced on load.
+             Nine skeletons fill a 3-col × 3-row grid.
+        ══════════════════════════════════════════ -->
+        <div
+          class="properties-grid"
+          id="listingsGrid"
+          role="list"
+          aria-label="Property listings"
+          aria-live="polite"
+          aria-busy="true"
+        >
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+          <div class="skeleton-card" role="listitem" aria-hidden="true"></div>
+        </div>
+
+
+        <!-- ── Load More / Pagination ─────────────────
+             id="loadMoreBtn"
+               Initially hidden (all results render at once).
+               Shown and wired by JS when pagination is added.
+             id="listingsEndMessage"
+               Shown by JS once all pages are exhausted.
+        ──────────────────────────────────────────── -->
+        <div class="section__footer listings-loadmore">
+
+          <button
+            type="button"
+            id="loadMoreBtn"
+            class="btn btn--outline btn--large"
+            aria-label="Load more property listings"
+            hidden
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 width="18" height="18" aria-hidden="true">
+              <polyline points="23 4 23 10 17 10"/>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+            </svg>
+            Load More Properties
+          </button>
+
+          <p
+            id="listingsEndMessage"
+            class="listings-loadmore__end"
+            role="status"
+            aria-live="polite"
+            hidden
+          >
+            You've seen all available listings. &nbsp;
+            <a href="contact.html" class="section__link">
+              List your property
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   width="15" height="15" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </a>
+          </p>
+
+        </div>
+
+      </div><!-- /section__inner -->
+    </section><!-- /#listingsMain -->
+
+
+    <!-- ═══════════════════════════════════════════
+         CALL-TO-ACTION STRIP
+         Reuses the .cta-strip component from
+         index.html unchanged for consistency.
+    ═══════════════════════════════════════════ -->
+    <section class="cta-strip" aria-labelledby="listingsCtaTitle">
+      <div class="cta-strip__inner">
+
+        <div class="cta-strip__content">
+          <h2 class="cta-strip__title" id="listingsCtaTitle">
+            Can't find what<br>
+            <em>you're looking for?</em>
+          </h2>
+          <p class="cta-strip__text">
+            Get in touch directly. We'll help you find the right property
+            in Dhangadhi and across Kailali — or list your own.
+          </p>
+        </div>
+
+        <div class="cta-strip__actions">
+          <a href="featured.html"  class="btn btn--gold btn--large">View Featured</a>
+          <a href="contact.html"   class="btn btn--ghost-light btn--large">Contact Us</a>
+
+          <div class="cta-strip__contact">
+            <a href="tel:9848841529" class="cta-strip__phone" aria-label="Call 9848841529">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.4a16 16 0 0 0 6 6l.91-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 18v-.08z"/>
+              </svg>
+              9848841529
+            </a>
+            <div class="cta-strip__socials">
+              <a href="https://www.facebook.com/profile.php?id=100064083400124"
+                 class="cta-strip__social-link"
+                 target="_blank" rel="noopener noreferrer"
+                 aria-label="Facebook page">Facebook</a>
+              <a href="https://www.instagram.com/sudurpaschimgharjagga/"
+                 class="cta-strip__social-link"
+                 target="_blank" rel="noopener noreferrer"
+                 aria-label="Instagram page">Instagram</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main><!-- /main -->
+
+
+  <!-- ═══════════════════════════════════════════
+       SITE FOOTER
+       Identical to index.html.
+       id="footerYear" is populated by script.js.
+  ═══════════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+
+      <div class="site-footer__top">
+
+        <div class="footer-brand">
+          <a href="index.html" class="footer-brand__logo" aria-label="Homepage">
+            <img
+              src="images/logo/logo.jpg"
+              alt="Sudurpaschim Ghar Jagga Kaarobaar"
+              class="footer-brand__img"
+              width="56" height="56"
+              onerror="this.style.display='none'"
+            >
+          </a>
+          <p class="footer-brand__name">Sudurpaschim<br>Ghar Jagga Kaarobaar</p>
+          <p class="footer-brand__devanagari" lang="ne">सुदूरपश्चिम घर जग्गा कारोबार</p>
+          <p class="footer-brand__location">📍 Dhangadhi, Kailali, Nepal</p>
+          <div class="footer-brand__socials">
+            <a href="https://www.facebook.com/profile.php?id=100064083400124"
+               class="footer-social-link" target="_blank" rel="noopener noreferrer"
+               aria-label="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            </a>
+            <a href="https://www.instagram.com/sudurpaschimgharjagga/"
+               class="footer-social-link" target="_blank" rel="noopener noreferrer"
+               aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <nav class="footer-nav" aria-label="Footer navigation">
+
+          <div class="footer-nav__group">
+            <h3 class="footer-nav__heading">Pages</h3>
+            <ul class="footer-nav__list" role="list">
+              <li><a href="index.html"    class="footer-nav__link">Home</a></li>
+              <li><a href="listings.html" class="footer-nav__link">All Listings</a></li>
+              <li><a href="featured.html" class="footer-nav__link">Featured</a></li>
+              <li><a href="about.html"    class="footer-nav__link">About Us</a></li>
+              <li><a href="contact.html"  class="footer-nav__link">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-nav__group">
+            <h3 class="footer-nav__heading">Property Types</h3>
+            <ul class="footer-nav__list" role="list">
+              <li><a href="listings.html?type=house"       class="footer-nav__link">Houses</a></li>
+              <li><a href="listings.html?type=land"        class="footer-nav__link">Land</a></li>
+              <li><a href="listings.html?type=commercial"  class="footer-nav__link">Commercial</a></li>
+              <li><a href="listings.html?type=apartment"   class="footer-nav__link">Apartments</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-nav__group">
+            <h3 class="footer-nav__heading">Contact</h3>
+            <ul class="footer-nav__list" role="list">
+              <li>
+                <a href="tel:9848841529"
+                   class="footer-nav__link footer-nav__link--phone"
+                   aria-label="Call 9848841529">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.4a16 16 0 0 0 6 6l.91-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 18v-.08z"/>
+                  </svg>
+                  9848841529
+                </a>
+              </li>
+              <li>
+                <a href="https://www.facebook.com/profile.php?id=100064083400124"
+                   class="footer-nav__link" target="_blank" rel="noopener noreferrer">
+                  Facebook Page
+                </a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/sudurpaschimgharjagga/"
+                   class="footer-nav__link" target="_blank" rel="noopener noreferrer">
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a href="contact.html" class="footer-nav__link">Send a Message</a>
+              </li>
+            </ul>
+          </div>
+
+        </nav>
+
+      </div><!-- /site-footer__top -->
+
+      <div class="site-footer__bottom">
+        <p class="site-footer__copy">
+          &copy; <span id="footerYear">2025</span>
+          Sudurpaschim Ghar Jagga Kaarobaar. All rights reserved.
+        </p>
+        <p class="site-footer__note">
+          Dhangadhi, Kailali, Nepal &nbsp;·&nbsp; Real Estate Listings Platform
+        </p>
+      </div>
+
+    </div><!-- /site-footer__inner -->
+  </footer>
+
+
+  <!--
+    script.js is loaded here (end of body = non-blocking).
+
+    On listings.html it runs:
+      detectPage()    → returns 'listings'
+      API.fetchAll()  → fetches Google Sheets data
+      Pages.listings(data) →
+        • reads ?type= ?status= ?district= ?q= URL params
+        • applies Filters.byType / byStatus / byDistrict / search
+        • DOM.setText('listingsCount', "X properties found")
+        • DOM.setText('listingsTotal', data.length)
+        • Renderer.grid('listingsGrid', filtered)
+        • wires #listingsSearch for live in-memory search
+      UI.initRevealClasses() → adds .reveal to below-fold elements
+      UI.initScrollReveal()  → IntersectionObserver activates
+  -->
+  <script src="js/script.js"></script>
+
+</body>
+</html>
